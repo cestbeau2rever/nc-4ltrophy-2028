@@ -3,11 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accueil — N&C 4L Trophy 2028</title>
+  <title>Accueil — N&C 4L Trophy 2028 | Association C'est Beau 2 Rêver</title>
+  <meta name="description" content="Découvrez l'équipage malouin Nathan et Clément (Association C'est Beau 2 Rêver) en route pour le 4L Trophy 2028. Aventure, solidarité et sponsoring à Saint-Malo.">
   
   <!-- Balises Open Graph pour les réseaux sociaux et SMS -->
   <meta property="og:title" content="N&C 4L Trophy 2028 — Devenez Partenaire !">
-  <meta property="og:description" content="Découvrez le projet de Nathan et Clément pour le 4L Trophy 2028. Aventure, solidarité et sponsoring : embarquez avec nous dans le désert !">
+  <meta property="og:description" content="Découvrez le projet de Nathan et Clément, deux cousins de Saint-Malo en route pour le 4L Trophy 2028. Embarquez avec nous dans le désert !">
   <meta property="og:image" content="https://natbat7.github.io/nc-4ltrophy-2028/logo_cb2r.png">
   <meta property="og:url" content="https://natbat7.github.io/nc-4ltrophy-2028/">
   
@@ -19,86 +20,160 @@
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-brand">N&C 2028</div>
-  <div class="nav-links">
+<!-- Barre de progression de lecture globale -->
+<div id="scroll-progress-bar"></div>
+
+<!-- NAVIGATION -->
+<nav class="navbar" id="main-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="logo_cb2r.png" alt="Logo C'est Beau 2 Rêver">
+    <div>
+      N&amp;C 2028
+      <span class="nav-brand-sub">C'est Beau 2 Rêver</span>
+    </div>
+  </a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">☰</button>
+  <div class="nav-links" id="nav-links">
     <a href="index.html" class="active">Accueil</a>
     <a href="projet.html">Le Projet</a>
     <a href="sponsors.html">Sponsors</a>
-    <a href="contact.html">Contact</a>
+    <a href="contact.html">Contact &amp; Budget</a>
+    <a href="sponsors.html#tarifs-sponsors" class="nav-cta">Devenir Sponsor</a>
   </div>
 </nav>
 
+<!-- HERO AVEC PARTICULES DE SABLE ET ROSE DES VENTS -->
 <header class="hero">
+  <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+  <!-- Rose des vents SVG animée en filigrane -->
+  <svg class="hero-compass" viewBox="0 0 200 200" fill="none" stroke="#c9a063" stroke-width="1" aria-hidden="true">
+    <circle cx="100" cy="100" r="90" stroke-dasharray="4 4"/>
+    <circle cx="100" cy="100" r="65"/>
+    <polygon points="100,10 112,88 190,100 112,112 100,190 88,112 10,100 88,88" fill="rgba(201,160,99,0.15)"/>
+    <line x1="100" y1="0" x2="100" y2="200"/>
+    <line x1="0" y1="100" x2="200" y2="100"/>
+  </svg>
+
   <div class="hero-dunes" aria-hidden="true">
     <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
-      <path d="M0,160 C200,100 350,190 550,140 C750,90 900,170 1200,110 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.10)"/>
-      <path d="M0,180 C250,140 450,200 700,160 C900,130 1050,190 1200,150 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.06)"/>
+      <path d="M0,160 C200,100 350,190 550,140 C750,90 900,170 1200,110 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.12)"/>
+      <path d="M0,180 C250,140 450,200 700,160 C900,130 1050,190 1200,150 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.07)"/>
     </svg>
   </div>
+
   <div class="hero-content">
-    <span class="stamp">4L Trophy · Édition 2028</span>
-    <h1>Cap sur le Sahara :<br>rejoignez <span class="accent">l'aventure</span></h1>
-    <p class="hero-sub">De la côte bretonne jusqu'au désert du Sahara — joignez-vous à notre équipage et à notre mission solidaire.</p>
+    <span class="stamp">Association C'est Beau 2 Rêver · Édition 2028</span>
+    <h1>De la cité corsaire au Sahara :<br>rejoignez <span class="accent">l'aventure</span></h1>
+    <p class="hero-sub">Deux cousins malouins, une Renault 4L et 6 000 kilomètres de pistes solidaires entre Saint-Malo et les dunes de Merzouga.</p>
+    
+    <div class="cta-row">
+      <a href="sponsors.html" class="btn primary">🚀 Configurateur 3D &amp; Espace Sponsors</a>
+      <a href="projet.html" class="btn ghost">Découvrir notre projet</a>
+      <a href="dossier_sponsoring.pdf" target="_blank" class="btn gold">📄 Dossier Partenariat (PDF)</a>
+    </div>
+
     <div class="hero-meta">
-      <div><span class="num">6 000 km</span><span class="lbl">France · Espagne · Maroc</span></div>
-      <div><span class="num">2</span><span class="lbl">équipiers, cousins & complices</span></div>
-      <div><span class="num">1</span><span class="lbl">Renault 4L à préparer</span></div>
+      <div>
+        <span class="num"><span class="counter" data-target="6000">0</span> km</span>
+        <span class="lbl">France · Espagne · Maroc</span>
+      </div>
+      <div>
+        <span class="num">+<span class="counter" data-target="1300">0</span></span>
+        <span class="lbl">Équipages engagés</span>
+      </div>
+      <div>
+        <span class="num"><span class="counter" data-target="12">0</span> jours</span>
+        <span class="lbl">De raid à la boussole</span>
+      </div>
+      <div>
+        <span class="num"><span class="counter" data-target="100">0</span> %</span>
+        <span class="lbl">Déductible (Compte 623)</span>
+      </div>
     </div>
   </div>
 </header>
 
-<!-- ======================================================== -->
-<!-- COMPTE À REBOURS -->
-<!-- ======================================================== -->
-<div style="background: #1d2229; border: 1px solid #c9a063; padding: 20px; border-radius: 8px; text-align: center; margin: 30px auto 10px auto; max-width: 600px; color: #f3efe4; box-shadow: 0 4px 15px rgba(0,0,0,0.5);">
-  <h3 style="font-family: 'Oswald', sans-serif; color: #c9a063; margin-top: 0; text-transform: uppercase; font-size: 20px; letter-spacing: 1px;">⏳ Le grand départ dans :</h3>
-  <div style="display: flex; justify-content: center; gap: 20px; font-family: 'Oswald', sans-serif; font-size: 32px; color: #c8402e;">
-    <div><span id="jours">00</span><span style="font-size: 12px; display: block; color: #b0aba0; text-transform: uppercase;">Jours</span></div>
-    <div>:</div>
-    <div><span id="heures">00</span><span style="font-size: 12px; display: block; color: #b0aba0; text-transform: uppercase;">Heures</span></div>
-    <div>:</div>
-    <div><span id="minutes">00</span><span style="font-size: 12px; display: block; color: #b0aba0; text-transform: uppercase;">Min</span></div>
-    <div>:</div>
-    <div><span id="secondes">00</span><span style="font-size: 12px; display: block; color: #b0aba0; text-transform: uppercase;">Sec</span></div>
+<!-- BANDEAU DÉFILANT RALLYE -->
+<div class="rally-ticker" aria-hidden="true">
+  <div class="ticker-track">
+    <span>SAINT-MALO</span><span class="sep">✦</span>
+    <span>BIARRITZ</span><span class="sep">✦</span>
+    <span>ALGÉSIRAS</span><span class="sep">✦</span>
+    <span>TANGER</span><span class="sep">✦</span>
+    <span>ATLAS MAROCAIN</span><span class="sep">✦</span>
+    <span>DUNES DE MERZOUGA</span><span class="sep">✦</span>
+    <span>MARRAKECH</span><span class="sep">✦</span>
+    <span>ASSOCIATION C'EST BEAU 2 RÊVER</span><span class="sep">✦</span>
+    <span>ENFANTS DU DÉSERT</span><span class="sep">✦</span>
+    <!-- Duplication pour défilement infini fluide -->
+    <span>SAINT-MALO</span><span class="sep">✦</span>
+    <span>BIARRITZ</span><span class="sep">✦</span>
+    <span>ALGÉSIRAS</span><span class="sep">✦</span>
+    <span>TANGER</span><span class="sep">✦</span>
+    <span>ATLAS MAROCAIN</span><span class="sep">✦</span>
+    <span>DUNES DE MERZOUGA</span><span class="sep">✦</span>
+    <span>MARRAKECH</span><span class="sep">✦</span>
+    <span>ASSOCIATION C'EST BEAU 2 RÊVER</span><span class="sep">✦</span>
+    <span>ENFANTS DU DÉSERT</span><span class="sep">✦</span>
   </div>
 </div>
 
-<script>
-  // Date cible du départ (15 Février 2028 à 12h00)
-  const dateDepart = new Date("Feb 15, 2028 12:00:00").getTime();
+<!-- COMPTE À REBOURS -->
+<div class="countdown-wrap reveal">
+  <div class="countdown-box">
+    <div class="countdown-title">⏳ Compte à rebours avant le grand départ (Février 2028)</div>
+    <div class="countdown-grid">
+      <div class="countdown-item">
+        <span class="val" id="jours">000</span>
+        <span class="unit">Jours</span>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <span class="val" id="heures">00</span>
+        <span class="unit">Heures</span>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <span class="val" id="minutes">00</span>
+        <span class="unit">Min</span>
+      </div>
+      <span class="countdown-sep">:</span>
+      <div class="countdown-item">
+        <span class="val" id="secondes">00</span>
+        <span class="unit">Sec</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-  setInterval(function() {
-    const maintenant = new Date().getTime();
-    const difference = dateDepart - maintenant;
+<!-- CORPS DE LA PAGE AVEC TRACÉ DE ROUTE ANIMÉ -->
+<div class="route-wrap" id="route-container">
+  <div class="route-spine-fill" id="route-spine-fill"></div>
 
-    if (difference > 0) {
-      document.getElementById("jours").innerHTML = Math.floor(difference / (1000 * 60 * 60 * 24));
-      document.getElementById("heures").innerHTML = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      document.getElementById("minutes").innerHTML = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
-      document.getElementById("secondes").innerHTML = Math.floor((difference % (1000 * 60)) / 1000);
-    } else {
-      document.getElementById("jours").innerHTML = "00";
-    }
-  }, 1000);
-</script>
-<!-- ======================================================== -->
-
-<div class="route-wrap">
-  <section id="histoire">
-    <div class="km"><span class="km-dot"></span><span class="km-label">Km 000 — Saint-Malo</span></div>
-    <div class="section-inner">
+  <!-- 1. NOTRE HISTOIRE -->
+  <section id="histoire" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 000 — Saint-Malo, Bretagne</span></div>
+    <div class="section-inner full">
       <p class="eyebrow">Notre Histoire</p>
       <h2 class="title">De 2008 à 2028, rien n'a vraiment changé</h2>
-      <p>Depuis nos premiers pas, nous avons absolument tout partagé. Les grands jeux comme les petites bêtises, les moments d'entraide infaillible comme les embrouilles mémorables qui ne duraient jamais bien longtemps. En réalité, plus que des cousins, nous avons grandi exactement comme deux frères.</p>
-      <p>Nous lancer ensemble dans l'aventure du 4L Trophy aujourd'hui, c'est tout simplement la suite logique de notre histoire. Nous savons que cette complicité forgée au fil des années sera notre meilleur moteur pour surmonter les galères mécaniques, garder le sourire dans le désert et mener à bien cette belle mission solidaire !</p>
+      <p>Depuis nos premiers pas à Saint-Malo, nous avons absolument tout partagé. Les grands jeux comme les petites bêtises, les moments d'entraide infaillible comme les embrouilles mémorables qui ne duraient jamais bien longtemps. En réalité, plus que des cousins, nous avons grandi exactement comme deux frères.</p>
+      <p>Nous lancer ensemble dans l'aventure du 4L Trophy aujourd'hui sous la bannière de notre association loi 1901 <strong>« C'est Beau 2 Rêver »</strong>, c'est tout simplement la suite logique de notre histoire. Nous savons que cette complicité forgée depuis l'enfance sera notre meilleur moteur pour surmonter les galères mécaniques, garder le sourire au milieu des dunes et mener à bien cette mission solidaire !</p>
       
       <div class="frame-row">
         <div class="frame">
-          <img src="photo-enfants.jpg" alt="Nathan et Clément enfants">
+          <img src="photo-enfants.jpg" alt="Nathan et Clément enfants en 2008">
+          <div class="frame-badge">
+            <span>Les cousins aux débuts</span>
+            <span class="date">07.12.2008</span>
+          </div>
         </div>
         <div class="frame">
           <img src="photo-aujourdhui.jpg" alt="Nathan et Clément aujourd'hui">
+          <div class="frame-badge">
+            <span>Prêts pour le désert</span>
+            <span class="date">Cap 2028</span>
+          </div>
         </div>
       </div>
     </div>
@@ -106,43 +181,263 @@
 
   <hr class="divider">
 
-  <section id="bios">
-    <div class="km"><span class="km-dot"></span><span class="km-label">Km 200 — Préparation</span></div>
-    <div class="section-inner" style="max-width:100%;">
+  <!-- 2. L'ÉQUIPAGE -->
+  <section id="bios" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 200 — L'Équipage Malouin</span></div>
+    <div class="section-inner full">
       <p class="eyebrow">Pour parler un peu plus de nous</p>
       <h2 class="title">Les deux visages du raid</h2>
       <div class="crew">
-        <div class="crew-card">
-          <div class="badge">N</div>
-          <h3>Nathan, 23 ans</h3>
-          <div class="role">Étudiant et alternant dans la data</div>
-          <p>Sa bio arrive bientôt.</p>
+        
+        <!-- Carte Nathan -->
+        <div class="crew-card spotlight-card">
+          <div class="crew-header">
+            <div class="badge">N</div>
+            <div>
+              <h3>Nathan, 23 ans</h3>
+              <div class="role">Étudiant et alternant dans la data</div>
+            </div>
+          </div>
+          <p>Malouin d'origine comme Clément, Nathan est habitué à jongler avec les chiffres, la gestion de projet et l'organisation au quotidien : c'est le cerveau logistique de l'équipage. Passionné de mécanique deux-roues et de défis techniques, il adore comprendre comment les choses fonctionnent et mettre les mains dans le cambouis.</p>
+          <p>Là où Clément apporte son recul et son expérience des grands voyages en autonomie, Nathan veille sur la préparation mécanique de la 4L, le suivi du budget et la navigation au roadbook.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">🛠️ Mécanique &amp; Prépa</span>
+            <span class="skill-tag">📊 Gestion &amp; Budget</span>
+            <span class="skill-tag">🧭 Navigation Roadbook</span>
+          </div>
         </div>
-        <div class="crew-card">
-          <div class="badge">C</div>
-          <h3>Clément, 25 ans</h3>
-          <div class="role">Négociateur immobilier</div>
+
+        <!-- Carte Clément -->
+        <div class="crew-card spotlight-card">
+          <div class="crew-header">
+            <div class="badge">C</div>
+            <div>
+              <h3>Clément, 25 ans</h3>
+              <div class="role">Négociateur immobilier</div>
+            </div>
+          </div>
           <p>Clément a toujours été un peu tête en l'air étant petit. Depuis son voyage humanitaire, seul avec son sac en Asie, il est revenu plus serein, posé et réfléchi. D'un naturel empathique, il est toujours là pour les autres, même s'ils ne le méritent pas forcément.</p>
           <p>C'est peut-être cette sagesse que je (Nathan) souhaite acquérir lors de ce raid. Le voir revenir plein d'émotions et d'anecdotes après son voyage m'a donné envie, à moi aussi, d'aider les autres.</p>
+          <div class="skill-tags">
+            <span class="skill-tag">🤝 Relations Partenaires</span>
+            <span class="skill-tag">🌍 Expérience Humanitaire</span>
+            <span class="skill-tag">🏜️ Sang-froid &amp; Endurance</span>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 3. POURQUOI EMBARQUER AVEC NOUS -->
+  <section id="pourquoi" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 400 — Devenir Partenaire</span></div>
+    <div class="section-inner full">
+      <p class="eyebrow">Entreprises &amp; Soutiens Locaux</p>
+      <h2 class="title">Pourquoi embarquer votre entreprise avec nous ?</h2>
+      <p>Soutenir notre équipage, c'est associer votre nom à une aventure humaine authentique qui rayonne sur tout le pays de Saint-Malo avant de traverser la France, l'Espagne et le Maroc.</p>
+
+      <div class="cards-grid">
+        <div class="info-card spotlight-card">
+          <h3>📢 Visibilité Locale &amp; Internationale</h3>
+          <p>Votre logo circulera sur un support publicitaire mythique et attirera tous les regards à Saint-Malo et sur la Côte d'Émeraude pendant nos mois de préparation, puis durant les 6 000 km du raid.</p>
+        </div>
+
+        <div class="info-card spotlight-card">
+          <h3>🎒 Engagement Solidaire</h3>
+          <p>Aux côtés de l'association <strong>Enfants du Désert</strong>, nous acheminons directement des fournitures scolaires et du matériel sportif pour favoriser l'accès à l'éducation dans le Sud marocain.</p>
+        </div>
+
+        <div class="info-card spotlight-card">
+          <h3>💼 100 % Déductible (Compte 623)</h3>
+          <p>Notre association vous délivre une facture de parrainage publicitaire. Cette dépense constitue une charge d'exploitation déductible à 100 % de votre résultat imposable.</p>
+        </div>
+      </div>
+
+      <div class="callout-box gold" style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px;">
+        <div>
+          <h3 style="font-size: 20px; color: var(--paper);">Envie de voir votre logo sur notre Renault 4L ?</h3>
+          <p style="font-size: 14.5px; color: var(--muted); margin-top: 4px;">Testez directement votre logo en 3D sur la carrosserie et découvrez nos emplacements disponibles.</p>
+        </div>
+        <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+          <a href="sponsors.html" class="btn primary">Ouvrir le Configurateur 3D</a>
+          <a href="contact.html" class="btn ghost">Nous contacter</a>
         </div>
       </div>
     </div>
   </section>
+
 </div>
 
-<!-- RÉSEAUX SOCIAUX -->
-<div style="text-align: center; margin: 50px 0;">
-  <h3 style="font-family: 'Oswald', sans-serif; color: #f3efe4; font-size: 24px; margin-bottom: 20px;">Suivez notre préparation en direct :</h3>
-  
-  <a href="https://www.instagram.com/ton_compte_instagram" target="_blank" style="display: inline-block; background-color: #c8402e; color: #fff; padding: 12px 25px; text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 18px; text-transform: uppercase; border-radius: 5px; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-    📸 Instagram
-  </a>
-  
-  <a href="https://www.tiktok.com/@ton_compte_tiktok" target="_blank" style="display: inline-block; background-color: #12151b; color: #fff; padding: 12px 25px; text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 18px; text-transform: uppercase; border-radius: 5px; border: 1px solid #c9a063; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-    🎵 TikTok
-  </a>
-</div>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Association C'est Beau 2 Rêver</h4>
+      <p>Association loi 1901 fondée par Nathan et Clément pour organiser et financer leur participation solidaire au 4L Trophy 2028 au départ de Saint-Malo.</p>
+      <p style="margin-top: 12px;"><a href="mailto:cestbeau2rever@gmail.com">✉️ cestbeau2rever@gmail.com</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">Accueil &amp; Équipage</a></li>
+        <li><a href="projet.html">Le Projet &amp; La 4L</a></li>
+        <li><a href="sponsors.html">Simulateur 3D &amp; Tarifs</a></li>
+        <li><a href="contact.html">Budget &amp; Contact</a></li>
+        <li><a href="dossier_sponsoring.pdf" target="_blank">Dossier Sponsoring (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suivez la préparation</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener">📸 Instagram</a></li>
+        <li><a href="https://www.tiktok.com/" target="_blank" rel="noopener">🎵 TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026-2028 Association C'est Beau 2 Rêver — Équipage Nathan &amp; Clément</span>
+    <span>Saint-Malo, Bretagne → Désert de Merzouga</span>
+  </div>
+</footer>
 
-<footer>Nathan & Clément — 4L Trophy 2028 · Bretagne → Sahara</footer>
+<!-- SCRIPTS D'ANIMATIONS & INTERACTIONS -->
+<script>
+  // 1. Menu Mobile
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+
+  // 2. Compte à rebours jusqu'au 15 Février 2028 à 12h00
+  const dateDepart = new Date("Feb 15, 2028 12:00:00").getTime();
+  function updateCountdown() {
+    const maintenant = new Date().getTime();
+    const diff = dateDepart - maintenant;
+    if (diff > 0) {
+      const j = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+      document.getElementById("jours").textContent = String(j).padStart(2, '0');
+      document.getElementById("heures").textContent = String(h).padStart(2, '0');
+      document.getElementById("minutes").textContent = String(m).padStart(2, '0');
+      document.getElementById("secondes").textContent = String(s).padStart(2, '0');
+    }
+  }
+  updateCountdown();
+  setInterval(updateCountdown, 1000);
+
+  // 3. Compteurs animés dans le Hero
+  const counters = document.querySelectorAll('.counter');
+  const animateCounter = (el) => {
+    const target = +el.getAttribute('data-target');
+    const duration = 1800;
+    const startTime = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 4);
+      const current = Math.floor(ease * target);
+      el.textContent = current.toLocaleString('fr-FR');
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+  counters.forEach(animateCounter);
+
+  // 4. Apparition au scroll (IntersectionObserver) & Illumination des bornes KM
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const km = entry.target.querySelector('.km');
+        if (km) km.classList.add('reached');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // 5. Progression de la ligne de route & Barre supérieure au scroll
+  const scrollBar = document.getElementById('scroll-progress-bar');
+  const spineFill = document.getElementById('route-spine-fill');
+  const routeContainer = document.getElementById('route-container');
+  const mainNav = document.getElementById('main-nav');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const globalPct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    if (scrollBar) scrollBar.style.width = globalPct + '%';
+
+    if (scrollTop > 40) {
+      mainNav.classList.add('scrolled');
+    } else {
+      mainNav.classList.remove('scrolled');
+    }
+
+    if (routeContainer && spineFill) {
+      const rect = routeContainer.getBoundingClientRect();
+      const triggerPoint = window.innerHeight * 0.6;
+      const scrolledInRoute = triggerPoint - rect.top;
+      const routePct = Math.max(0, Math.min(100, (scrolledInRoute / rect.height) * 100));
+      spineFill.style.setProperty('--spine-height', routePct + '%');
+    }
+  }, { passive: true });
+
+  // 6. Effet Halo Spotlight sur les cartes au survol de la souris
+  document.querySelectorAll('.spotlight-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+  });
+
+  // 7. Particules de sable doré dans le Hero (Canvas léger)
+  const canvas = document.getElementById('sand-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+
+    function initParticles() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      particles = Array.from({ length: 42 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2 + 0.6,
+        vx: Math.random() * 0.6 + 0.15,
+        vy: -Math.random() * 0.35 - 0.05,
+        alpha: Math.random() * 0.45 + 0.1
+      }));
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 160, 99, ${p.alpha})`;
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+
+    initParticles();
+    drawParticles();
+    window.addEventListener('resize', initParticles);
+  }
+</script>
 </body>
 </html>
