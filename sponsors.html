@@ -3,7 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sponsors — N&C 4L Trophy 2028</title>
+  <title>Sponsors & Configurateur 3D — N&C 4L Trophy 2028 | C'est Beau 2 Rêver</title>
+  <meta name="description" content="Devenez partenaire de l'équipage malouin Nathan et Clément pour le 4L Trophy 2028. Testez votre logo en 3D sur notre 4L et découvrez nos encarts 100 % déductibles.">
+  
   <link rel="icon" type="image/png" href="logo_cb2r.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,184 +13,824 @@
   <link rel="stylesheet" href="style.css">
   
   <style>
-    #configurateur-container {
-      width: 100%;
-      height: 60vh;
-      background: var(--ink-2);
+    /* ---------- STYLES SPÉCIFIQUES PAGE SPONSORS ---------- */
+    .viewer-wrapper {
+      background: var(--card);
       border: 1px solid var(--sand-deep);
-      border-radius: 8px;
-      margin-top: 30px;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 26px;
+      box-shadow: 0 18px 42px rgba(0, 0, 0, 0.55);
+    }
+    .viewer-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      padding: 12px 20px;
+      background: #14181f;
+      border-bottom: 1px solid var(--border-dark);
+    }
+    .viewer-status {
       display: flex;
       align-items: center;
-      justify-content: center;
-      overflow: hidden;
+      gap: 10px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--sand);
+      text-transform: uppercase;
+    }
+    .viewer-status .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #38c172;
+      box-shadow: 0 0 8px #38c172;
+    }
+    #configurateur-container {
+      width: 100%;
+      height: 64vh;
+      background: var(--ink-2);
       position: relative;
     }
-
-    /* Agrandit le simulateur sur téléphone */
     @media (max-width: 768px) {
       #configurateur-container {
         height: 75vh;
       }
     }
+
+    /* Simulateur Fiscal */
+    .tax-simulator {
+      background: linear-gradient(145deg, #202630, #171b22);
+      border: 1px solid var(--sand-deep);
+      border-radius: 10px;
+      padding: 30px;
+      margin-top: 28px;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.4);
+    }
+    .tax-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+    .rate-toggle {
+      display: inline-flex;
+      background: var(--ink);
+      border: 1px solid var(--border-dark);
+      border-radius: 5px;
+      overflow: hidden;
+    }
+    .rate-btn {
+      background: transparent;
+      color: var(--muted);
+      border: none;
+      padding: 8px 14px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .rate-btn.active {
+      background: var(--sand);
+      color: var(--ink);
+      font-weight: 600;
+    }
+
+    .range-slider {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--ink);
+      border: 1px solid var(--border-dark);
+      outline: none;
+      margin: 18px 0 24px;
+      cursor: pointer;
+    }
+    .range-slider::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      appearance: none;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: var(--rally-red);
+      border: 2px solid var(--paper);
+      box-shadow: 0 0 12px var(--rally-red);
+      cursor: pointer;
+      transition: transform 0.15s ease;
+    }
+    .range-slider::-webkit-slider-thumb:hover {
+      transform: scale(1.15);
+    }
+
+    .tax-results {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+    }
+    .tax-box {
+      background: var(--ink);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      padding: 18px;
+      text-align: center;
+    }
+    .tax-box.highlight {
+      border-color: var(--rally-red);
+      background: rgba(200, 64, 46, 0.08);
+    }
+    .tax-box .t-lbl {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 6px;
+    }
+    .tax-box .t-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: 32px;
+      color: var(--paper);
+      line-height: 1.1;
+    }
+
+    /* Grille des cartes du Plan de Marquage */
+    .zones-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      gap: 18px;
+      margin-top: 16px;
+    }
+    .zone-card {
+      background: var(--card);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 22px;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      position: relative;
+      overflow: hidden;
+    }
+    .zone-card.premium {
+      border-top: 3px solid var(--sand);
+    }
+    .zone-card.strategic {
+      border-top: 3px solid var(--rally-red);
+    }
+    .zone-card:hover,
+    .zone-card.selected {
+      border-color: var(--sand);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.45);
+      background: var(--card-hover);
+    }
+    .zone-card.selected::after {
+      content: "✓ SÉLECTIONNÉ";
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      background: var(--rally-red);
+      color: var(--paper);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 10px;
+      padding: 3px 8px;
+      border-radius: 3px;
+    }
+    .zone-num {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--sand);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+    .zone-card h4 {
+      font-size: 20px;
+      margin: 6px 0 8px;
+      color: var(--paper);
+    }
+    .zone-desc {
+      font-size: 13.5px;
+      color: var(--muted);
+      margin-bottom: 16px;
+      line-height: 1.5;
+    }
+    .zone-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .zone-price {
+      font-family: 'Oswald', sans-serif;
+      font-size: 26px;
+      color: var(--rally-red-bright);
+    }
+    .zone-action {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--sand-light);
+      text-transform: uppercase;
+    }
+
+    /* Schéma technique */
+    .schema-box {
+      max-width: 760px;
+      margin: 28px auto 36px;
+      background: var(--card);
+      padding: 20px;
+      border: 1px solid var(--border-dark);
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.4);
+    }
+    .schema-box img {
+      width: 100%;
+      border-radius: 6px;
+    }
   </style>
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-brand">N&C 2028</div>
-  <div class="nav-links">
+<!-- Barre de progression de lecture globale -->
+<div id="scroll-progress-bar"></div>
+
+<!-- NAVIGATION -->
+<nav class="navbar" id="main-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="logo_cb2r.png" alt="Logo C'est Beau 2 Rêver">
+    <div>
+      N&amp;C 2028
+      <span class="nav-brand-sub">C'est Beau 2 Rêver</span>
+    </div>
+  </a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">☰</button>
+  <div class="nav-links" id="nav-links">
     <a href="index.html">Accueil</a>
     <a href="projet.html">Le Projet</a>
     <a href="sponsors.html" class="active">Sponsors</a>
-    <a href="contact.html">Contact</a>
+    <a href="contact.html">Contact &amp; Budget</a>
+    <a href="#sponsor-form-area" class="nav-cta">Réserver une zone</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <header class="hero small">
+  <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+  <svg class="hero-compass" viewBox="0 0 200 200" fill="none" stroke="#c9a063" stroke-width="1" aria-hidden="true">
+    <circle cx="100" cy="100" r="90" stroke-dasharray="4 4"/>
+    <circle cx="100" cy="100" r="65"/>
+    <polygon points="100,10 112,88 190,100 112,112 100,190 88,112 10,100 88,88" fill="rgba(201,160,99,0.15)"/>
+  </svg>
+
+  <div class="hero-dunes" aria-hidden="true">
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+      <path d="M0,160 C200,100 350,190 550,140 C750,90 900,170 1200,110 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.12)"/>
+      <path d="M0,180 C250,140 450,200 700,160 C900,130 1050,190 1200,150 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.07)"/>
+    </svg>
+  </div>
+
   <div class="hero-content">
-    <span class="stamp">Partenariat</span>
+    <span class="stamp">Partenariat Entreprises · Saint-Malo &amp; Bretagne</span>
     <h1>Espaces <span class="accent">Sponsors</span></h1>
+    <p class="hero-sub">Faites voyager votre entreprise de la Côte d'Émeraude jusqu'au Sahara sur un support publicitaire solidaire et 100 % déductible.</p>
+    <div class="cta-row">
+      <a href="dossier_sponsoring.pdf" target="_blank" class="btn gold">📄 Télécharger notre dossier de partenariat (PDF)</a>
+      <a href="#tarifs-sponsors" class="btn ghost">Consulter le plan de marquage</a>
+    </div>
   </div>
 </header>
 
-
-
-  <!-- Bouton de téléchargement du dossier PDF -->
-      <div style="text-align: center; margin: 40px 0;">
-        <a href="dossier_sponsoring.pdf" target="_blank" style="background-color: #c9a063; color: #12151b; padding: 15px 30px; text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 18px; text-transform: uppercase; font-weight: bold; border-radius: 5px; display: inline-block; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-          📄 Télécharger notre dossier de partenariat (PDF)
-        </a>
-      </div>
-<div class="route-wrap">
+<!-- CORPS DE LA PAGE -->
+<div class="route-wrap" id="route-container">
+  <div class="route-spine-fill" id="route-spine-fill"></div>
   
   <!-- 1. LA ZONE 3D -->
-  <section id="configurateur">
-    <div class="km"><span class="km-dot"></span><span class="km-label">Km 5000 — Testez votre logo</span></div>
-    <div class="section-inner" style="max-width:100%;">
+  <section id="configurateur" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 5000 — Testez votre logo en 3D</span></div>
+    <div class="section-inner full">
       <p class="eyebrow">Configurateur Interactif</p>
       <h2 class="title">Projetez-vous sur notre future 4L</h2>
-      <p>Utilisez notre simulateur 3D interactif pour uploader votre logo et visualiser votre futur emplacement publicitaire en direct.</p>
+      <p>Utilisez notre simulateur 3D interactif ci-dessous pour importer votre logo, le déplacer sur la carrosserie et visualiser votre futur emplacement publicitaire en direct :</p>
       
-      <div id="configurateur-container">
-        <iframe 
-          src="https://natbat7.github.io/modele4L/" 
-          width="100%" 
-          height="100%" 
-          style="border: none; border-radius: 8px;"
-          title="Configurateur 3D 4L Trophy">
-        </iframe>
+      <div class="viewer-wrapper">
+        <div class="viewer-toolbar">
+          <div class="viewer-status">
+            <span class="dot"></span>
+            <span>Studio 3D Renault 4L — Rotation, Zoom &amp; Import de logo actifs</span>
+          </div>
+          <button type="button" class="btn ghost" style="padding: 6px 14px; font-size: 12px;" onclick="toggleFullscreen3D()">⛶ Plein Écran</button>
+        </div>
+        <div id="configurateur-container">
+          <iframe 
+            id="iframe-3d"
+            src="https://natbat7.github.io/modele4L/" 
+            width="100%" 
+            height="100%" 
+            style="border: none;"
+            allowfullscreen
+            title="Configurateur 3D 4L Trophy">
+          </iframe>
+        </div>
       </div>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- 2. LA ZONE DE SÉLECTION DU PLAN DE MARQUAGE -->
-  <section id="tarifs-sponsors">
+  <!-- 2. AVANTAGE FISCAL & SIMULATEUR DE COÛT RÉEL -->
+  <section id="fiscalite" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 5100 — Avantage Fiscal &amp; Comptable</span></div>
+    <div class="section-inner full">
+      <p class="eyebrow">Optimisation Financière</p>
+      <h2 class="title">100 % déductible de votre résultat imposable</h2>
+      <p>L'achat d'un encart publicitaire sur notre 4L est une prestation de parrainage (sponsoring publicitaire). Notre association loi 1901 <strong>C'est Beau 2 Rêver</strong> vous délivre une facture officielle pour votre comptabilité.</p>
+      <p>Cette dépense s'inscrit dans le <strong>Compte 623 (Publicité, publications, relations publiques)</strong> : elle passe directement dans vos charges d'exploitation et vient diminuer votre bénéfice imposable.</p>
+
+      <!-- Simulateur interactif -->
+      <div class="tax-simulator">
+        <div class="tax-header">
+          <div>
+            <h3 style="font-size: 20px; color: var(--sand);">🧮 Simulateur de coût réel après déduction d'impôt</h3>
+            <p style="font-size: 14px; color: var(--muted); margin-top: 2px;">Ajustez le curseur ou cliquez sur un emplacement plus bas pour calculer le coût net pour votre trésorerie :</p>
+          </div>
+          <div class="rate-toggle" role="group" aria-label="Taux d'imposition">
+            <button type="button" class="rate-btn active" id="btn-rate-25" onclick="setTaxRate(0.25)">IS Taux Normal (25%)</button>
+            <button type="button" class="rate-btn" id="btn-rate-15" onclick="setTaxRate(0.15)">IS Taux PME (15%)</button>
+          </div>
+        </div>
+
+        <input type="range" id="tax-slider" class="range-slider" min="200" max="1500" step="50" value="700" oninput="updateTaxSimulator(this.value)">
+
+        <div class="tax-results">
+          <div class="tax-box">
+            <span class="t-lbl">Montant facturé (Association sans TVA)</span>
+            <div class="t-val" id="sim-brut">700 €</div>
+          </div>
+          <div class="tax-box">
+            <span class="t-lbl">Réduction d'Impôt Société (<span id="sim-rate-label">25%</span>)</span>
+            <div class="t-val" id="sim-eco" style="color: var(--sand);">- 175 €</div>
+          </div>
+          <div class="tax-box highlight">
+            <span class="t-lbl" style="color: var(--rally-red-bright);">Coût réel final pour l'entreprise</span>
+            <div class="t-val" id="sim-net" style="color: var(--rally-red-bright);">525 €</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 3. LA ZONE DE SÉLECTION DU PLAN DE MARQUAGE -->
+  <section id="tarifs-sponsors" class="reveal">
     <div class="km"><span class="km-dot"></span><span class="km-label">Km 5200 — Le Plan de Marquage</span></div>
-    <div class="section-inner" style="max-width:100%;">
-      <p class="eyebrow">Schéma officiel</p>
-      <h2 class="title">Repérez votre emplacement sur la 4L</h2>
-      <p>Choisissez votre numéro de zone sur le schéma technique ci-dessous pour préparer votre dossier de partenariat.</p>
+    <div class="section-inner full">
+      <p class="eyebrow">Schéma officiel · Zones 1 à 29</p>
+      <h2 class="title">Repérez et réservez votre emplacement</h2>
+      <p>Consultez les numéros de zones sur le plan technique ci-dessous, puis <strong>cliquez directement sur l'emplacement de votre choix</strong> pour pré-remplir votre demande de partenariat :</p>
 
-
-
-<!-- Bloc d'information Fiscalité / Comptabilité -->
-      <div style="max-width: 650px; margin: 0 auto 30px auto; background: #191e25; border-left: 4px solid #c9a063; padding: 20px; border-radius: 0 8px 8px 0;">
-        <h3 style="font-family: 'Oswald', sans-serif; font-size: 18px; color: #c9a063; margin-bottom: 10px; text-transform: uppercase;">💡 Avantage fiscal pour votre entreprise</h3>
-        <p style="font-size: 14px; color: #b0aba0; margin-bottom: 10px; line-height: 1.6;">
-          <strong>Le saviez-vous ?</strong> L'achat d'un encart publicitaire sur notre 4L est une prestation de parrainage (sponsoring). Nous vous fournirons une facture émise par notre association.
-        </p>
-        <p style="font-size: 14px; color: #b0aba0; margin: 0; line-height: 1.6;">
-          Cette facture est assimilée à une dépense de communication (Compte 623). Elle passe donc dans vos charges d'exploitation et <strong>vient directement diminuer votre bénéfice imposable</strong>. Un excellent moyen d'allier visibilité, soutien solidaire et optimisation financière !
-        </p>
-      </div>      
-      
-
-
-<!-- Schéma de la voiture -->
-      <div style="max-width: 650px; margin: 30px auto; background: #1d2229; padding: 15px; border: 1px solid #3a4454; border-radius: 8px; text-align: center;">
-        <img src="schema-voiture.jpg" alt="Schéma technique 4L Trophy" style="width: 100%; display: block; border-radius: 4px;">
+      <!-- Schéma de la voiture -->
+      <div class="schema-box">
+        <img src="schema-voiture.jpg" alt="Schéma technique 4L Trophy Zones 1 à 29">
+        <p class="mono" style="font-size: 12px; color: var(--muted); margin-top: 12px;">Plan de marquage officiel — Zones 1 à 29 personnalisables aux couleurs de votre entreprise</p>
       </div>
 
-      <!-- Le formulaire de sélection par numéro -->
-      <div id="sponsor-form-area" style="margin-top: 40px; padding: 24px; background: #1d2229; border: 1px solid #8a6a3a; border-radius: 8px; max-width: 650px; margin-left: auto; margin-right: auto;">
-        <h3 style="font-size: 22px; font-family: 'Oswald', sans-serif; text-transform: uppercase; margin-bottom: 20px;">Réserver votre emplacement</h3>
-        
-        <label style="display:block; margin-bottom:10px; font-family:'IBM Plex Mono'; font-size:14px; text-transform:uppercase;">Sélectionnez votre numéro de zone :</label>
-        <select id="zone-select" style="width: 100%; padding: 12px; background: #12151b; color: #f3efe4; border: 1px solid #8b8579; border-radius: 4px; font-size: 16px; margin-bottom: 20px;">
-          <option value="">-- Choisissez un emplacement (Zones 1 à 29) --</option>
-          <option value="Zone 1 - Capot Centre (1100€)">Zone 1 - Capot Centre (1 100 €)</option>
-          <option value="Zone 2 & 3 - Capot Latéral (700€)">Zones 2 & 3 - Capot Latéral (700 €)</option>
-          <option value="Zone 4 - Haut de pare-brise (400€)">Zone 4 - Haut de pare-brise (400 €)</option>
-          <option value="Zones 5 à 14 - Flanc Droit">Flanc Droit - Zones 5 à 14 (De 200 € à 700 €)</option>
-          <option value="Zones 15 à 24 - Flanc Gauche">Flanc Gauche - Zones 15 à 24 (De 200 € à 700 €)</option>
-          <option value="Zone 25 - Lunette Arrière (400€)">Zone 25 - Lunette Arrière (400 €)</option>
-          <option value="Zone 26 - Hayon Central (700€)">Zone 26 - Hayon Central (700 €)</option>
-          <option value="Zone 27 - Coffre Bas (500€)">Zone 27 - Coffre Bas (500 €)</option>
-          <option value="Zone 28 - Pare-chocs Arrière (300€)">Zone 28 - Pare-chocs Arrière (300 €)</option>
-          <option value="Zone 29 - Toit (1300€)">Zone 29 - Toit (1300€)</option>
-        </select>
+      <!-- Catégorie 1 : Emplacements Premium -->
+      <h3 style="font-size: 22px; color: var(--sand); margin-bottom: 6px;">⭐ Emplacements Premium (Haute Visibilité)</h3>
+      <p style="font-size: 14.5px; color: var(--muted); margin-bottom: 16px;">Les plus grandes surfaces de la 4L, visibles de loin sur les photos presse, vidéos et expositions à Saint-Malo :</p>
 
-        <a href="#" class="btn primary" style="display: inline-block; background: #c8402e; color: #f3efe4; padding: 14px 26px; text-transform: uppercase; font-family: 'Oswald'; text-decoration: none; border-radius: 2px;" onclick="generateDossier(event)">Générer ma demande de partenariat</a>
+      <div class="zones-grid">
+        <!-- Zone 29 -->
+        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 29 - Toit (1300€)', 1300)">
+          <div>
+            <span class="zone-num">Zone 29 · Vue Panoramique</span>
+            <h4>Toit Complet</h4>
+            <p class="zone-desc">Surface géante au sommet de la 4L, idéale pour les prises de vues aériennes et drones dans le désert.</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">1 300 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+
+        <!-- Zone 1 -->
+        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 1 - Capot Centre (1100€)', 1100)">
+          <div>
+            <span class="zone-num">Zone 1 · Face Avant</span>
+            <h4>Capot Central</h4>
+            <p class="zone-desc">L'emplacement roi au cœur du capot avant, présent sur toutes les photos de face de l'équipage.</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">1 100 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+
+        <!-- Zones 2 & 3 -->
+        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 2 & 3 - Capot Latéral (700€)', 700)">
+          <div>
+            <span class="zone-num">Zones 2 &amp; 3 · Avant</span>
+            <h4>Capot Latéral</h4>
+            <p class="zone-desc">Mise en valeur dynamique sur les flancs supérieurs du capot avant (droit ou gauche).</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">700 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+
+        <!-- Zone 26 -->
+        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 26 - Hayon Central (700€)', 700)">
+          <div>
+            <span class="zone-num">Zone 26 · Face Arrière</span>
+            <h4>Hayon Central</h4>
+            <p class="zone-desc">Visibilité permanente pour tous les véhicules et équipages qui nous suivent sur la route et les pistes.</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">700 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catégorie 2 : Emplacements Stratégiques -->
+      <h3 style="font-size: 22px; color: var(--paper); margin: 38px 0 6px;">🎯 Emplacements Stratégiques &amp; Latéraux</h3>
+      <p style="font-size: 14.5px; color: var(--muted); margin-bottom: 16px;">Des formats accessibles et percutants sur les profils, le vitrage et l'arrière du véhicule :</p>
+
+      <div class="zones-grid">
+        <!-- Flanc Droit -->
+        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zones 5 à 14 - Flanc Droit', 500)">
+          <div>
+            <span class="zone-num">Zones 5 à 14 · Profil Droit</span>
+            <h4>Portières &amp; Ailes (Droit)</h4>
+            <p class="zone-desc">Portière avant, panneaux latéraux ou ailes côté passager (tarif selon la zone choisie de 200 € à 700 €).</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">200 à 700 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+
+        <!-- Flanc Gauche -->
+        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zones 15 à 24 - Flanc Gauche', 500)">
+          <div>
+            <span class="zone-num">Zones 15 à 24 · Profil Gauche</span>
+            <h4>Portières &amp; Ailes (Gauche)</h4>
+            <p class="zone-desc">Portière avant, panneaux latéraux ou ailes côté conducteur (tarif selon la zone choisie de 200 € à 700 €).</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">200 à 700 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+
+        <!-- Zone 27 -->
+        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zone 27 - Coffre Bas (500€)', 500)">
+          <div>
+            <span class="zone-num">Zone 27 · Arrière</span>
+            <h4>Coffre Bas</h4>
+            <p class="zone-desc">Large bandeau horizontal situé sur la partie basse du coffre arrière de la 4L.</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">500 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+
+        <!-- Zones 4 & 25 -->
+        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zone 4 - Haut de pare-brise (400€)', 400)">
+          <div>
+            <span class="zone-num">Zones 4 ou 25 · Vitrage</span>
+            <h4>Pare-brise / Lunette</h4>
+            <p class="zone-desc">Bandeau pare-soleil façon voiture de course à l'avant (Zone 4) ou sur la lunette arrière (Zone 25).</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">400 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+
+        <!-- Zone 28 -->
+        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zone 28 - Pare-chocs Arrière (300€)', 300)">
+          <div>
+            <span class="zone-num">Zone 28 · Ticket d'entrée Pro</span>
+            <h4>Pare-chocs Arrière</h4>
+            <p class="zone-desc">Format idéal pour soutenir notre aventure à coût maîtrisé tout en affichant votre enseigne.</p>
+          </div>
+          <div class="zone-footer">
+            <span class="zone-price">300 €</span>
+            <span class="zone-action">Sélectionner →</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- FORMULAIRE DE RÉSERVATION -->
+      <div id="sponsor-form-area" class="form-card" style="max-width: 720px; margin: 48px auto 0 auto;">
+        <h3 style="font-size: 24px; margin-bottom: 6px;">Réserver votre emplacement</h3>
+        <p style="font-size: 14.5px; color: var(--muted); margin-bottom: 22px;">Sélectionnez votre zone et indiquez le nom de votre entreprise : nous vous recontactons sous 24h avec le contrat de partenariat et la facture correspondante.</p>
+        
+        <form onsubmit="generateDossier(event)">
+          <label class="form-label" for="zone-select">1. Numéro de zone souhaité :</label>
+          <select id="zone-select" class="form-select" required>
+            <option value="">-- Choisissez un emplacement (Zones 1 à 29) --</option>
+            <option value="Zone 29 - Toit (1300€)">Zone 29 - Toit (1 300 €)</option>
+            <option value="Zone 1 - Capot Centre (1100€)">Zone 1 - Capot Centre (1 100 €)</option>
+            <option value="Zone 2 & 3 - Capot Latéral (700€)">Zones 2 &amp; 3 - Capot Latéral (700 €)</option>
+            <option value="Zone 26 - Hayon Central (700€)">Zone 26 - Hayon Central (700 €)</option>
+            <option value="Zones 5 à 14 - Flanc Droit">Flanc Droit - Zones 5 à 14 (De 200 € à 700 €)</option>
+            <option value="Zones 15 à 24 - Flanc Gauche">Flanc Gauche - Zones 15 à 24 (De 200 € à 700 €)</option>
+            <option value="Zone 27 - Coffre Bas (500€)">Zone 27 - Coffre Bas (500 €)</option>
+            <option value="Zone 4 - Haut de pare-brise (400€)">Zone 4 - Haut de pare-brise (400 €)</option>
+            <option value="Zone 25 - Lunette Arrière (400€)">Zone 25 - Lunette Arrière (400 €)</option>
+            <option value="Zone 28 - Pare-chocs Arrière (300€)">Zone 28 - Pare-chocs Arrière (300 €)</option>
+            <option value="Partenariat Matériel / Sur-mesure">Partenariat Matériel / Sur-mesure (Pièces, Garage, Impression...)</option>
+          </select>
+
+          <label class="form-label" for="sponsor-company">2. Nom de votre Entreprise &amp; Interlocuteur :</label>
+          <input type="text" id="sponsor-company" class="form-input" placeholder="Ex: Garage Malouin — M. Le Goff" required>
+
+          <label class="form-label" for="sponsor-contact">3. Téléphone ou E-mail de contact :</label>
+          <input type="text" id="sponsor-contact" class="form-input" placeholder="Ex: 06 00 00 00 00 ou contact@entreprise.bzh" required>
+
+          <label class="form-label" for="sponsor-notes">4. Précisions éventuelles (numéro exact de flanc, question...) :</label>
+          <input type="text" id="sponsor-notes" class="form-input" placeholder="Optionnel : Ex. intéressé par la portière avant Zone 8">
+
+          <button type="submit" class="btn primary" style="width: 100%;">Générer ma demande de partenariat</button>
+        </form>
+
+        <!-- Secours automatique presse-papier -->
+        <div id="sponsor-fallback" class="fallback-notice">
+          <strong>✅ Votre demande est prête à être envoyée !</strong><br>
+          Si votre messagerie mail ne s'est pas ouverte automatiquement, cliquez sur le bouton ci-dessous pour copier votre demande et envoyez-la à <strong>cestbeau2rever@gmail.com</strong> :
+          <div style="margin-top: 12px; display: flex; gap: 10px; flex-wrap: wrap;">
+            <button type="button" class="btn gold" style="padding: 9px 16px; font-size: 13px;" onclick="copySponsorText()">📋 Copier ma demande &amp; l'adresse mail</button>
+          </div>
+        </div>
       </div>
 
     </div>
   </section>
-<!-- SECTION FAQ SPONSORS -->
-<div style="max-width: 800px; margin: 50px auto; color: #f3efe4;">
-  <h2 style="font-family: 'Oswald', sans-serif; color: #c8402e; text-transform: uppercase; text-align: center;">Foire Aux Questions</h2>
-  
-  <details style="background: #1d2229; padding: 15px; margin-bottom: 10px; border-radius: 5px; border-left: 4px solid #c9a063; cursor: pointer;">
-    <summary style="font-weight: bold; font-size: 18px; outline: none;">Les dons sont-ils déductibles ?</summary>
-    <p style="margin-top: 10px; font-size: 14px; color: #b0aba0;">Oui ! Le parrainage (ou sponsoring) est une dépense publicitaire (compte 623). Cette charge d'exploitation est 100% déductible de votre résultat imposable.</p>
-  </details>
 
-  <details style="background: #1d2229; padding: 15px; margin-bottom: 10px; border-radius: 5px; border-left: 4px solid #c8402e; cursor: pointer;">
-    <summary style="font-weight: bold; font-size: 18px; outline: none;">Jusqu'à quand pouvons-nous devenir partenaire ?</summary>
-    <p style="margin-top: 10px; font-size: 14px; color: #b0aba0;">Nous clôturons les emplacements sur la 4L en décembre 2027 pour avoir le temps de faire floquer la voiture par un professionnel. Ne tardez pas !</p>
-  </details>
+  <hr class="divider">
 
-  <details style="background: #1d2229; padding: 15px; margin-bottom: 10px; border-radius: 5px; border-left: 4px solid #c9a063; cursor: pointer;">
-    <summary style="font-weight: bold; font-size: 18px; outline: none;">Sous quel format devez-vous recevoir notre logo ?</summary>
-    <p style="margin-top: 10px; font-size: 14px; color: #b0aba0;">Idéalement en format vectoriel (.AI, .EPS, .SVG) ou en image de très haute qualité (.PNG avec fond transparent) pour garantir une impression parfaite sur la carrosserie.</p>
-  </details>
+  <!-- 4. SECTION FAQ SPONSORS -->
+  <section id="faq" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 5500 — Foire Aux Questions</span></div>
+    <div class="section-inner full">
+      <p class="eyebrow">Informations Pratiques</p>
+      <h2 class="title">Questions Fréquentes des Partenaires</h2>
+      
+      <details class="faq-item" open>
+        <summary>Les participations sont-elles déductibles ?</summary>
+        <p>Oui ! Le parrainage (ou sponsoring) est une dépense publicitaire (compte 623). Notre association vous remet une facture d'achat d'espace publicitaire : cette charge d'exploitation est 100 % déductible de votre résultat imposable.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Jusqu'à quand pouvons-nous devenir partenaire ?</summary>
+        <p>Nous clôturons les emplacements sur la 4L en décembre 2027 pour avoir le temps de faire floquer la voiture par un professionnel. Plus vous nous rejoignez tôt, plus votre logo profite d'une exposition prolongée lors de nos événements à Saint-Malo !</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Sous quel format devez-vous recevoir notre logo ?</summary>
+        <p>Idéalement en format vectoriel (<code>.AI</code>, <code>.EPS</code>, <code>.SVG</code> ou <code>.PDF</code>) ou en image de très haute qualité (<code>.PNG</code> avec fond transparent) pour garantir une impression parfaite sur la carrosserie.</p>
+      </details>
+
+      <details class="faq-item">
+        <summary>Pouvons-nous vous aider en nature (pièces mécaniques, impression, matériel) ?</summary>
+        <p>Avec grand plaisir ! Si vous êtes garagiste, carrossier, imprimeur ou fournisseur d'équipements, nous pouvons établir un partenariat en échange de marchandises ou de prestations techniques contre un emplacement sur la 4L.</p>
+      </details>
+    </div>
+  </section>
+
 </div>
-</div>
 
-<footer>Nathan & Clément — 4L Trophy 2028 · Bretagne → Sahara</footer>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Association C'est Beau 2 Rêver</h4>
+      <p>Association loi 1901 fondée par Nathan et Clément pour organiser et financer leur participation solidaire au 4L Trophy 2028 au départ de Saint-Malo.</p>
+      <p style="margin-top: 12px;"><a href="mailto:cestbeau2rever@gmail.com">✉️ cestbeau2rever@gmail.com</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">Accueil &amp; Équipage</a></li>
+        <li><a href="projet.html">Le Projet &amp; La 4L</a></li>
+        <li><a href="sponsors.html">Simulateur 3D &amp; Tarifs</a></li>
+        <li><a href="contact.html">Budget &amp; Contact</a></li>
+        <li><a href="dossier_sponsoring.pdf" target="_blank">Dossier Sponsoring (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suivez la préparation</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener">📸 Instagram</a></li>
+        <li><a href="https://www.tiktok.com/" target="_blank" rel="noopener">🎵 TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026-2028 Association C'est Beau 2 Rêver — Équipage Nathan &amp; Clément</span>
+    <span>Saint-Malo, Bretagne → Désert de Merzouga</span>
+  </div>
+</footer>
 
-<!-- LE SCRIPT JAVASCRIPT CORRIGÉ -->
+<!-- SCRIPTS INTERACTIFS -->
 <script>
+  // 1. Menu Mobile
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+
+  // 2. Mode Plein Écran pour le Configurateur 3D
+  function toggleFullscreen3D() {
+    const container = document.getElementById('configurateur-container');
+    if (!document.fullscreenElement) {
+      if (container.requestFullscreen) container.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) document.exitFullscreen();
+    }
+  }
+
+  // 3. Simulateur Fiscal (IS 25% vs PME 15%)
+  let currentTaxRate = 0.25;
+
+  function setTaxRate(rate) {
+    currentTaxRate = rate;
+    document.getElementById('btn-rate-25').classList.toggle('active', rate === 0.25);
+    document.getElementById('btn-rate-15').classList.toggle('active', rate === 0.15);
+    document.getElementById('sim-rate-label').textContent = Math.round(rate * 100) + '%';
+    updateTaxSimulator(document.getElementById('tax-slider').value);
+  }
+
+  function updateTaxSimulator(val) {
+    const brut = parseInt(val, 10);
+    const eco = Math.round(brut * currentTaxRate);
+    const net = brut - eco;
+    document.getElementById('sim-brut').textContent = brut.toLocaleString('fr-FR') + ' €';
+    document.getElementById('sim-eco').textContent = '- ' + eco.toLocaleString('fr-FR') + ' €';
+    document.getElementById('sim-net').textContent = net.toLocaleString('fr-FR') + ' €';
+  }
+
+  // 4. Sélection interactive d'une carte du Plan de Marquage
+  function chooseZoneCard(cardEl, optionValue, priceVal) {
+    document.querySelectorAll('.zone-card').forEach(c => c.classList.remove('selected'));
+    cardEl.classList.add('selected');
+
+    // Synchronise le simulateur fiscal avec le prix de la zone choisie
+    const slider = document.getElementById('tax-slider');
+    if (slider && priceVal) {
+      slider.value = priceVal;
+      updateTaxSimulator(priceVal);
+    }
+
+    // Sélectionne l'option dans le menu déroulant
+    const select = document.getElementById('zone-select');
+    for (let i = 0; i < select.options.length; i++) {
+      if (select.options[i].value === optionValue) {
+        select.selectedIndex = i;
+        break;
+      }
+    }
+
+    // Scroll fluide jusqu'au formulaire
+    document.getElementById('sponsor-form-area').scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  // 5. Génération de l'e-mail de demande de partenariat + Secours Presse-Papier
+  let lastSponsorClipboard = "";
+
   function generateDossier(event) {
-    if (event) event.preventDefault(); 
+    if (event) event.preventDefault();
     
     const select = document.getElementById('zone-select');
     const chosenZone = select.value;
+    const company = document.getElementById('sponsor-company').value.trim();
+    const contact = document.getElementById('sponsor-contact').value.trim();
+    const notes = document.getElementById('sponsor-notes').value.trim();
     
-    if(!chosenZone) {
-      alert("Veuillez sélectionner un emplacement dans la liste déroulante avant de générer votre demande.");
+    if (!chosenZone) {
+      alert("Veuillez sélectionner un emplacement dans la liste déroulante.");
       return;
     }
     
-    const emailTo = "cestbeau2rever@gmail.com"; 
-    const subject = encodeURIComponent("Demande de Sponsoring 4L Trophy - " + chosenZone);
-    
-    // Le texte du mail pré-rempli pour votre boîte
-    const body = encodeURIComponent(
+    const emailTo = "cestbeau2rever@gmail.com";
+    const subjectText = "Demande de Sponsoring 4L Trophy - " + company + " (" + chosenZone + ")";
+    const bodyText =
       "Bonjour Nathan et Clément,\n\n" +
-      "Je souhaite réserver l'emplacement suivant pour notre entreprise :\n" +
-      "📌 " + chosenZone + "\n\n" +
+      "Je souhaite réserver l'emplacement suivant sur votre 4L pour notre entreprise :\n" +
+      "📌 Emplacement : " + chosenZone + "\n" +
+      "🏢 Entreprise & Contact : " + company + "\n" +
+      "📞 Coordonnées : " + contact + "\n" +
+      (notes ? "💬 Précisions : " + notes + "\n" : "") + "\n" +
       "⚠️ [Rappel : N'oubliez pas d'attacher votre logo en pièce jointe de cet e-mail]\n\n" +
-      "Pouvez-vous nous recontacter pour m'envoyer le dossier officiel et valider notre partenariat ?\n\n" +
-      "Cordialement,\n" +
-      "[Nom de votre entreprise / Contact]"
-    );
-    
-    window.location.href = "mailto:" + emailTo + "?subject=" + subject + "&body=" + body;
+      "Pouvez-vous nous recontacter pour nous transmettre la convention de partenariat et la facture ?\n\n" +
+      "Cordialement,\n" + company;
+
+    lastSponsorClipboard = "Destinataire : " + emailTo + "\nObjet : " + subjectText + "\n\n" + bodyText;
+    document.getElementById('sponsor-fallback').style.display = 'block';
+
+    window.location.href = "mailto:" + emailTo + "?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
+  }
+
+  function copySponsorText() {
+    navigator.clipboard.writeText(lastSponsorClipboard).then(() => {
+      alert("Votre demande et l'adresse cestbeau2rever@gmail.com ont été copiées dans le presse-papier !");
+    });
+  }
+
+  // 6. Apparition au scroll & progression de la route
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const km = entry.target.querySelector('.km');
+        if (km) km.classList.add('reached');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const scrollBar = document.getElementById('scroll-progress-bar');
+  const spineFill = document.getElementById('route-spine-fill');
+  const routeContainer = document.getElementById('route-container');
+  const mainNav = document.getElementById('main-nav');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollBar) scrollBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+    mainNav.classList.toggle('scrolled', scrollTop > 40);
+
+    if (routeContainer && spineFill) {
+      const rect = routeContainer.getBoundingClientRect();
+      const scrolledInRoute = (window.innerHeight * 0.6) - rect.top;
+      const routePct = Math.max(0, Math.min(100, (scrolledInRoute / rect.height) * 100));
+      spineFill.style.setProperty('--spine-height', routePct + '%');
+    }
+  }, { passive: true });
+
+  // 7. Effet Halo Spotlight sur les cartes
+  document.querySelectorAll('.spotlight-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+  });
+
+  // 8. Particules de sable doré dans le Hero
+  const canvas = document.getElementById('sand-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+    function initParticles() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      particles = Array.from({ length: 30 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2 + 0.6,
+        vx: Math.random() * 0.6 + 0.15,
+        vy: -Math.random() * 0.35 - 0.05,
+        alpha: Math.random() * 0.45 + 0.1
+      }));
+    }
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 160, 99, ${p.alpha})`;
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+    initParticles();
+    drawParticles();
+    window.addEventListener('resize', initParticles);
   }
 </script>
-
 </body>
 </html>
