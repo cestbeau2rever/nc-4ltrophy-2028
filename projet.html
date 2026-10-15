@@ -3,89 +3,361 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Le Projet — N&C 4L Trophy 2028</title>
+  <title>Le Projet & La 4L — N&C 4L Trophy 2028 | C'est Beau 2 Rêver</title>
+  <meta name="description" content="Découvrez le projet 4L Trophy 2028 de Nathan et Clément : préparation mécanique de la Renault 4L GTL à Saint-Malo, parcours de 6 000 km et mission solidaire Enfants du Désert.">
+  
   <link rel="icon" type="image/png" href="logo_cb2r.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Literata:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Styles spécifiques à la page Projet (Atelier & Roadbook) */
+    .specs-banner {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 14px;
+      margin: 28px 0;
+      background: #151920;
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 20px;
+    }
+    .spec-box {
+      border-left: 2px solid var(--sand);
+      padding-left: 14px;
+    }
+    .spec-box .s-val {
+      font-family: 'Oswald', sans-serif;
+      font-size: 22px;
+      color: var(--paper);
+      display: block;
+    }
+    .spec-box .s-lbl {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--muted);
+      text-transform: uppercase;
+    }
+
+    /* Onglets interactifs de l'atelier mécanique */
+    .garage-tabs {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin: 28px 0 18px;
+    }
+    .garage-tab {
+      background: var(--ink);
+      color: var(--muted);
+      border: 1px solid var(--border-dark);
+      padding: 10px 18px;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+    }
+    .garage-tab:hover {
+      color: var(--paper);
+      border-color: var(--sand-deep);
+    }
+    .garage-tab.active {
+      background: var(--rally-red);
+      color: var(--paper);
+      border-color: var(--rally-red);
+      box-shadow: 0 4px 14px rgba(200, 64, 46, 0.35);
+    }
+
+    .garage-panel {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 26px;
+      animation: fadePanel 0.35s ease;
+    }
+    .garage-panel.active {
+      display: block;
+    }
+    @keyframes fadePanel {
+      from { opacity: 0; transform: translateY(8px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .check-list {
+      list-style: none;
+      margin-top: 14px;
+      display: grid;
+      gap: 12px;
+    }
+    .check-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 16px;
+      background: var(--ink);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      font-size: 14.5px;
+      color: var(--paper);
+      flex-wrap: wrap;
+    }
+    .status-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 3px;
+      letter-spacing: 0.06em;
+    }
+    .status-pill.todo {
+      background: rgba(201, 160, 99, 0.14);
+      color: var(--sand);
+      border: 1px solid var(--sand-deep);
+    }
+    .status-pill. priority {
+      background: rgba(200, 64, 46, 0.16);
+      color: var(--rally-red-bright);
+      border: 1px solid var(--rally-red);
+    }
+
+    /* Badges d'étapes du Roadbook */
+    .stage-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+    .stage-pill {
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      background: var(--ink);
+      color: var(--sand-light);
+      padding: 4px 10px;
+      border-radius: 3px;
+      border: 1px solid var(--border-dark);
+    }
+  </style>
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-brand">N&C 2028</div>
-  <div class="nav-links">
+<!-- Barre de progression de lecture globale -->
+<div id="scroll-progress-bar"></div>
+
+<!-- NAVIGATION -->
+<nav class="navbar" id="main-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="logo_cb2r.png" alt="Logo C'est Beau 2 Rêver">
+    <div>
+      N&amp;C 2028
+      <span class="nav-brand-sub">C'est Beau 2 Rêver</span>
+    </div>
+  </a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">☰</button>
+  <div class="nav-links" id="nav-links">
     <a href="index.html">Accueil</a>
     <a href="projet.html" class="active">Le Projet</a>
     <a href="sponsors.html">Sponsors</a>
-    <a href="contact.html">Contact</a>
+    <a href="contact.html">Contact &amp; Budget</a>
+    <a href="sponsors.html#tarifs-sponsors" class="nav-cta">Devenir Sponsor</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <header class="hero small">
+  <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+  <svg class="hero-compass" viewBox="0 0 200 200" fill="none" stroke="#c9a063" stroke-width="1" aria-hidden="true">
+    <circle cx="100" cy="100" r="90" stroke-dasharray="4 4"/>
+    <circle cx="100" cy="100" r="65"/>
+    <polygon points="100,10 112,88 190,100 112,112 100,190 88,112 10,100 88,88" fill="rgba(201,160,99,0.15)"/>
+  </svg>
+
+  <div class="hero-dunes" aria-hidden="true">
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+      <path d="M0,160 C200,100 350,190 550,140 C750,90 900,170 1200,110 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.12)"/>
+      <path d="M0,180 C250,140 450,200 700,160 C900,130 1050,190 1200,150 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.07)"/>
+    </svg>
+  </div>
+
   <div class="hero-content">
-    <span class="stamp">L'aventure</span>
+    <span class="stamp">L'aventure mécanique &amp; humaine</span>
     <h1>Le Projet <span class="accent">Solidaire</span></h1>
+    <p class="hero-sub">6 000 kilomètres sans GPS, une Renault 4L préparée de A à Z et des fournitures scolaires acheminées jusqu'aux portes du Sahara.</p>
   </div>
 </header>
 
-<div class="route-wrap">
+<!-- CORPS DE LA PAGE -->
+<div class="route-wrap" id="route-container">
+  <div class="route-spine-fill" id="route-spine-fill"></div>
   
   <!-- 1. PRÉSENTATION GÉNÉRALE DU RAID -->
-  <section id="brief">
+  <section id="brief" class="reveal">
     <div class="km"><span class="km-dot"></span><span class="km-label">Km 800 — L'esprit d'aventure</span></div>
-    <div class="section-inner">
+    <div class="section-inner full">
       <p class="eyebrow">Le raid en quelques mots</p>
       <h2 class="title">Le plus grand raid étudiant d'Europe</h2>
-      <p>Créé en 1997, le 4L Trophy rassemble chaque année plus de 1 300 équipages. Le principe est simple mais redoutable : parcourir 6 000 kilomètres entre la France et le Maroc, exclusivement en Renault 4L, sans autre aide qu'une carte et une boussole.</p>
-      <p>L'objectif n'est pas d'aller le plus vite, mais de relier chaque étape en parcourant le moins de kilomètres possible — un vrai défi d'orientation et d'endurance mécanique, doublé d'une mission solidaire.</p>
+      <p>Créé en 1997, le 4L Trophy rassemble chaque année plus de 1 300 équipages. Le principe est simple mais redoutable : parcourir 6 000 kilomètres entre la France, l'Espagne et le Maroc, exclusivement en Renault 4L, sans autre aide qu'une carte, un roadbook et une boussole.</p>
+      <p>L'objectif n'est pas d'aller le plus vite, mais de relier chaque étape en parcourant le moins de kilomètres possible — un vrai défi d'orientation, de franchissement et d'endurance mécanique, doublé d'une mission solidaire concrète.</p>
+
+      <div class="cards-grid">
+        <div class="info-card spotlight-card" style="text-align: center;">
+          <div class="big-price" style="color: var(--rally-red);">6 000 km</div>
+          <h3>De parcours</h3>
+          <p>Aller-retour depuis Saint-Malo jusqu'aux pistes sablonneuses du Sud marocain.</p>
+        </div>
+        <div class="info-card spotlight-card" style="text-align: center;">
+          <div class="big-price" style="color: var(--sand);">12 Jours</div>
+          <h3>D'aventure</h3>
+          <p>Traversée de 3 pays, bivouacs dans le désert et orientation pure à la boussole.</p>
+        </div>
+        <div class="info-card spotlight-card" style="text-align: center;">
+          <div class="big-price" style="color: var(--paper);">+ 1 300</div>
+          <h3>Équipages engagés</h3>
+          <p>Une immense caravane d'entraide mécanique et d'engagement humanitaire.</p>
+        </div>
+      </div>
     </div>
   </section>
 
   <hr class="divider">
 
-  <!-- 2. SECTION : NOTRE 4L -->
-  <section id="voiture">
-    <div class="km"><span class="km-dot"></span><span class="km-label">Km 1500 — La Monture</span></div>
-    <div class="section-inner" style="max-width:100%;">
+  <!-- 2. SECTION : NOTRE 4L & ATELIER MÉCANIQUE INTERACTIF -->
+  <section id="voiture" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 1500 — La Monture &amp; L'Atelier</span></div>
+    <div class="section-inner full">
       <p class="eyebrow">Le 3ème membre de l'équipage</p>
       <h2 class="title">Notre future Renault 4L</h2>
-      <p>Pas de 4L Trophy sans la légendaire Renault 4 ! Robuste, populaire et symbole d'aventure, elle sera notre maison, notre bureau et notre atelier mécanique pendant 6 000 km.</p>
+      <p>Pas de 4L Trophy sans la légendaire Renault 4 ! Robuste, populaire et symbole d'aventure, elle sera notre maison, notre bureau de navigation et notre atelier mécanique pendant 6 000 km.</p>
 
-      <!-- Grille de présentation Voiture / Mécanique -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px;">
-        
-        <!-- Bloc 1 : La Recherche -->
-        <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 24px;">
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #c9a063; margin-bottom: 10px; text-transform: uppercase;">🔍 À la recherche de la perle rare</h3>
-          <p style="color: #b0aba0; font-size: 14px; line-height: 1.6;">
-            Nous sommes actuellement en pleine recherche de notre modèle : idéalement une <strong>R4 GTL</strong> (moteur 1108 cm³), réputée pour sa fiabilité sur les pistes marocaines et son freinage à disques à l'avant.
-          </p>
-          <div style="margin-top: 15px; padding: 10px; background: #12151b; border-left: 3px solid #c9a063; font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #f3efe4;">
-            👉 Vous vendez une 4L ou avez un plan ? <a href="contact.html" style="color: #c8402e; text-decoration: underline;">Contactez-nous !</a>
-          </div>
+      <!-- Fiche technique cible -->
+      <div class="specs-banner">
+        <div class="spec-box">
+          <span class="s-val">R4 GTL</span>
+          <span class="s-lbl">Modèle recherché</span>
         </div>
-
-        <!-- Bloc 2 : La Préparation Mécanique -->
-        <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 24px;">
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #c9a063; margin-bottom: 10px; text-transform: uppercase;">🛠️ Au programme de l'atelier</h3>
-          <p style="color: #b0aba0; font-size: 14px; line-height: 1.6; margin-bottom: 10px;">
-            Pour résister aux dunes et aux routes défoncées du désert, la voiture va subir une préparation complète :
-          </p>
-          <ul style="color: #b0aba0; font-size: 14px; line-height: 1.8; padding-left: 20px; margin: 0;">
-            <li>Renfort du châssis et installation de plaques de protection sous le moteur et le réservoir.</li>
-            <li>Révision complète du moteur (allumage, refroidissement, joint de culasse, carburateur).</li>
-            <li>Pose d'anneaux de remorquage, de phares additionnels et de pneus tout-terrain (à crampons).</li>
-          </ul>
+        <div class="spec-box">
+          <span class="s-val">1 108 cm³</span>
+          <span class="s-lbl">Moteur Cléon-Fonte</span>
         </div>
+        <div class="spec-box">
+          <span class="s-val">34 ch</span>
+          <span class="s-lbl">Puissance pure</span>
+        </div>
+        <div class="spec-box">
+          <span class="s-val">Disques AV</span>
+          <span class="s-lbl">Freinage sécurisé</span>
+        </div>
+        <div class="spec-box">
+          <span class="s-val">~720 kg</span>
+          <span class="s-lbl">Poids plume sur sable</span>
+        </div>
+      </div>
 
+      <!-- Appel à la recherche de la 4L -->
+      <div class="callout-box gold" style="margin-bottom: 32px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;">
+        <div>
+          <h3 style="font-size: 19px; color: var(--paper);">🔍 À la recherche de la perle rare en Bretagne !</h3>
+          <p style="font-size: 14.5px; color: var(--muted); margin-top: 4px;">
+            Nous recherchons actuellement notre <strong>Renault 4 GTL</strong> (ou Savane) ainsi que des pièces détachées et un garage partenaire autour de Saint-Malo. Vous vendez une 4L ou avez un bon plan ?
+          </p>
+        </div>
+        <a href="contact.html" class="btn primary">Proposer un véhicule / un coup de main</a>
+      </div>
+
+      <!-- Onglets interactifs du programme de préparation mécanique -->
+      <h3 style="font-size: 22px; color: var(--sand);">🛠️ Le programme de préparation à l'atelier</h3>
+      <p style="font-size: 15px; color: var(--muted); margin-top: 6px;">Cliquez sur chaque pôle technique pour découvrir les modifications prévues avant le grand départ :</p>
+
+      <div class="garage-tabs" role="tablist">
+        <button class="garage-tab active" onclick="openGarageTab(event, 'tab-chassis')">1. Châssis &amp; Blindage</button>
+        <button class="garage-tab" onclick="openGarageTab(event, 'tab-moteur')">2. Moteur &amp; Refroidissement</button>
+        <button class="garage-tab" onclick="openGarageTab(event, 'tab-desert')">3. Équipements Pistes &amp; Sécurité</button>
+      </div>
+
+      <!-- Panel 1 : Châssis -->
+      <div id="tab-chassis" class="garage-panel active">
+        <h4 style="font-size: 18px; color: var(--paper);">Protection intégrale contre les pierres de l'Atlas</h4>
+        <p style="font-size: 14.5px; color: var(--muted); margin-top: 4px;">Les pistes caillouteuses marocaines mettent les soubassements à rude épreuve. Priorité absolue à la rigidité :</p>
+        <ul class="check-list">
+          <li class="check-item">
+            <span>Inspection complète, sablage et renfort des longerons du châssis</span>
+            <span class="status-pill priority">Priorité #1</span>
+          </li>
+          <li class="check-item">
+            <span>Pose de plaques de protection (blindage aluminium) sous le moteur et le réservoir</span>
+            <span class="status-pill priority">Obligatoire Raid</span>
+          </li>
+          <li class="check-item">
+            <span>Montage de 4 amortisseurs renforcés et réhaussage de la garde au sol</span>
+            <span class="status-pill todo">Planifié</span>
+          </li>
+          <li class="check-item">
+            <span>Remplacement des rotules, roulements, cardans et révision du freinage</span>
+            <span class="status-pill todo">Planifié</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Panel 2 : Moteur -->
+      <div id="tab-moteur" class="garage-panel">
+        <h4 style="font-size: 18px; color: var(--paper);">Fiabilisation du moteur Cléon 1108 cm³</h4>
+        <p style="font-size: 14.5px; color: var(--muted); margin-top: 4px;">Pour affronter la chaleur du désert et les longues montées de cols sans surchauffe :</p>
+        <ul class="check-list">
+          <li class="check-item">
+            <span>Révision complète : joint de culasse, pompe à eau, courroies et réglage carburateur</span>
+            <span class="status-pill priority">Cœur Mécanique</span>
+          </li>
+          <li class="check-item">
+            <span>Installation d'un second ventilateur de radiateur à déclenchement manuel au tableau de bord</span>
+            <span class="status-pill todo">Anti-Surchauffe</span>
+          </li>
+          <li class="check-item">
+            <span>Remise à neuf de l'allumage (bougies, faisceau, bobine, condensateur) et batterie haute capacité</span>
+            <span class="status-pill todo">Planifié</span>
+          </li>
+          <li class="check-item">
+            <span>Installation d'un pré-filtre à air cyclonique (protection contre le sable fin)</span>
+            <span class="status-pill todo">Spécial Sahara</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Panel 3 : Équipements Désert -->
+      <div id="tab-desert" class="garage-panel">
+        <h4 style="font-size: 18px; color: var(--paper);">Homologation 4L Trophy &amp; Désensablage</h4>
+        <p style="font-size: 14.5px; color: var(--muted); margin-top: 4px;">Tous les équipements exigés aux vérifications techniques de Biarritz pour franchir les dunes :</p>
+        <ul class="check-list">
+          <li class="check-item">
+            <span>Soudure d'anneaux de remorquage ultra-résistants à l'avant et à l'arrière</span>
+            <span class="status-pill priority">Obligatoire Raid</span>
+          </li>
+          <li class="check-item">
+            <span>6 pneumatiques tout-terrain à crampons (dont 2 roues de secours dans le coffre)</span>
+            <span class="status-pill priority">Obligatoire Raid</span>
+          </li>
+          <li class="check-item">
+            <span>Plaques de désensablage, pelles, sangle kinétique, extincteur 2 kg et jerrican 20 L</span>
+            <span class="status-pill todo">Équipement Bivouac</span>
+          </li>
+          <li class="check-item">
+            <span>Rampe de phares additionnels longue portée et aménagement du coffre sur-mesure</span>
+            <span class="status-pill todo">Planifié</span>
+          </li>
+        </ul>
       </div>
 
       <!-- Emplacement Photo Avant / Après -->
-      <div style="margin-top: 30px; background: #191e25; border: 1px dashed #8a6a3a; border-radius: 8px; padding: 30px; text-align: center;">
+      <div style="margin-top: 30px; background: #191e25; border: 1px dashed var(--sand-deep); border-radius: 8px; padding: 32px; text-align: center;">
         <span style="font-size: 36px; display: block; margin-bottom: 10px;">📸</span>
-        <h4 style="font-family: 'Oswald', sans-serif; color: #f3efe4; font-size: 18px; text-transform: uppercase; margin-bottom: 5px;">Bientôt ici : l'évolution de notre 4L en images</h4>
-        <p style="color: #b0aba0; font-size: 14px; margin: 0;">Dès notre achat, retrouvez les photos étape par étape de la restauration mécanique et du flocage aux couleurs de nos sponsors !</p>
+        <h4 style="color: var(--paper); font-size: 19px; margin-bottom: 6px;">Bientôt ici : l'évolution de notre 4L en images</h4>
+        <p style="color: var(--muted); font-size: 14.5px; margin: 0;">Dès notre achat, retrouvez les photos étape par étape de la restauration mécanique et du flocage aux couleurs de nos sponsors !</p>
       </div>
 
     </div>
@@ -94,85 +366,264 @@
   <hr class="divider">
 
   <!-- 3. SECTION : LE PARCOURS ÉTAPE PAR ÉTAPE -->
-  <section id="parcours">
+  <section id="parcours" class="reveal">
     <div class="km"><span class="km-dot"></span><span class="km-label">Km 3000 — La Route du Sahara</span></div>
-    <div class="section-inner" style="max-width:100%;">
-      <p class="eyebrow">Les grandes étapes</p>
+    <div class="section-inner full">
+      <p class="eyebrow">Roadbook officiel</p>
       <h2 class="title">De Saint-Malo au désert de Merzouga</h2>
       <p>Le 4L Trophy est une véritable course d'orientation. Voici le tracé global de notre périple de plus de 6 000 kilomètres à travers 3 pays :</p>
 
-      <!-- Frise chronologique (Timeline verticale) -->
-      <div style="position: relative; max-width: 700px; margin: 40px auto 0 auto; padding-left: 30px; border-left: 2px solid #c9a063;">
+      <div class="timeline">
         
         <!-- Étape 1 -->
-        <div style="position: relative; margin-bottom: 30px;">
-          <div style="position: absolute; left: -37px; top: 0; width: 12px; height: 12px; background: #c8402e; border: 2px solid #f3efe4; border-radius: 50%;"></div>
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9a063; text-transform: uppercase;">Étape 1 · Bretagne, France</span>
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #f3efe4; margin: 5px 0;">Saint-Malo — Le Grand Départ des Cousins</h3>
-          <p style="color: #b0aba0; font-size: 14px; margin: 0; line-height: 1.6;">Départ officiel de notre fief breton avec le coffre chargé de fournitures scolaires, de matériel médical et de pièces de rechange.</p>
+        <div class="timeline-item spotlight-card">
+          <div class="timeline-dot highlight"></div>
+          <span class="timeline-step">Étape 1 · Bretagne, France</span>
+          <h3>Saint-Malo — Le Grand Départ des Cousins</h3>
+          <p>Départ officiel de notre fief breton avec le coffre chargé de fournitures scolaires, de matériel médical et de pièces de rechange après un rassemblement avec nos partenaires malouins.</p>
+          <div class="stage-meta">
+            <span class="stage-pill">📍 Cap vers le Pays Basque</span>
+            <span class="stage-pill">🛣️ ~720 km de liaison</span>
+            <span class="stage-pill">🎒 Coffre 100 % chargé</span>
+          </div>
         </div>
 
         <!-- Étape 2 -->
-        <div style="position: relative; margin-bottom: 30px;">
-          <div style="position: absolute; left: -37px; top: 0; width: 12px; height: 12px; background: #c9a063; border: 2px solid #12151b; border-radius: 50%;"></div>
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9a063; text-transform: uppercase;">Étape 2 · Biarritz, France</span>
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #f3efe4; margin: 5px 0;">Le Village Départ & Vérifications techniques</h3>
-          <p style="color: #b0aba0; font-size: 14px; margin: 0; line-height: 1.6;">Rassemblement officiel des 1 300 équipages. Contrôle technique, vérification des équipements de sécurité et validation des dons humanitaires.</p>
+        <div class="timeline-item spotlight-card">
+          <div class="timeline-dot"></div>
+          <span class="timeline-step">Étape 2 · Biarritz, France</span>
+          <h3>Le Village Départ &amp; Vérifications techniques</h3>
+          <p>Rassemblement officiel des 1 300 équipages. Contrôle technique, pose des stickers officiels, vérification des équipements de sécurité et validation des dons humanitaires.</p>
+          <div class="stage-meta">
+            <span class="stage-pill">🔧 Contrôle Technique &amp; Médical</span>
+            <span class="stage-pill">🚗 1 300+ Renault 4L réunies</span>
+            <span class="stage-pill">🏁 Signal du départ officiel</span>
+          </div>
         </div>
 
         <!-- Étape 3 -->
-        <div style="position: relative; margin-bottom: 30px;">
-          <div style="position: absolute; left: -37px; top: 0; width: 12px; height: 12px; background: #c9a063; border: 2px solid #12151b; border-radius: 50%;"></div>
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9a063; text-transform: uppercase;">Étape 3 · Traversée de l'Espagne</span>
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #f3efe4; margin: 5px 0;">Cap au Sud — Algésiras & le Détroit de Gibraltar</h3>
-          <p style="color: #b0aba0; font-size: 14px; margin: 0; line-height: 1.6;">Traversée libre de la péninsule ibérique (plus de 1 000 km en autonomie) jusqu'au sud de l'Espagne pour embarquer sur le ferry direction le Maroc.</p>
+        <div class="timeline-item spotlight-card">
+          <div class="timeline-dot"></div>
+          <span class="timeline-step">Étape 3 · Traversée de l'Espagne</span>
+          <h3>Cap au Sud — Algésiras &amp; le Détroit de Gibraltar</h3>
+          <p>Traversée libre de la péninsule ibérique (plus de 1 000 km en autonomie) jusqu'au sud de l'Espagne pour embarquer sur le ferry direction le Maroc.</p>
+          <div class="stage-meta">
+            <span class="stage-pill">🛣️ +1 100 km d'endurance</span>
+            <span class="stage-pill">⛴️ Traversée en Ferry vers Tanger</span>
+            <span class="stage-pill">🌍 Passage sur le continent africain</span>
+          </div>
         </div>
 
         <!-- Étape 4 -->
-        <div style="position: relative; margin-bottom: 30px;">
-          <div style="position: absolute; left: -37px; top: 0; width: 12px; height: 12px; background: #c9a063; border: 2px solid #12151b; border-radius: 50%;"></div>
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c9a063; text-transform: uppercase;">Étape 4 · Maroc (Moyen Atlas & Sahara)</span>
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #f3efe4; margin: 5px 0;">Les Pistes du Désert & Le Bivouac de Merzouga</h3>
-          <p style="color: #b0aba0; font-size: 14px; margin: 0; line-height: 1.6;">Début des vraies épreuves au roadbook et à la boussole : passage de cols montagneux, pistes caillouteuses, bacs à sable et la fameuse épreuve Marathon (48h en autonomie dans le désert).</p>
+        <div class="timeline-item spotlight-card">
+          <div class="timeline-dot"></div>
+          <span class="timeline-step">Étape 4 · Maroc (Moyen Atlas &amp; Sahara)</span>
+          <h3>Les Pistes du Désert &amp; Le Bivouac de Merzouga</h3>
+          <p>Début des vraies épreuves au roadbook et à la boussole : passage de cols montagneux, pistes caillouteuses, bacs à sable et la fameuse épreuve Marathon (48h en autonomie totale dans le désert).</p>
+          <div class="stage-meta">
+            <span class="stage-pill">🧭 Boussole &amp; Roadbook uniquement</span>
+            <span class="stage-pill">🏜️ Dunes de Merzouga</span>
+            <span class="stage-pill">⛺ 48h Étape Marathon en autonomie</span>
+          </div>
         </div>
 
         <!-- Étape 5 -->
-        <div style="position: relative;">
-          <div style="position: absolute; left: -37px; top: 0; width: 12px; height: 12px; background: #c8402e; border: 2px solid #f3efe4; border-radius: 50%;"></div>
-          <span style="font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: #c8402e; text-transform: uppercase;">Étape 5 · L'Arrivée Finale</span>
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #f3efe4; margin: 5px 0;">Marrakech — Ligne d'Arrivée & Remise des Dons</h3>
-          <p style="color: #b0aba0; font-size: 14px; margin: 0; line-height: 1.6;">Arrivée triomphale à Marrakech, distribution du matériel scolaire et sportif avec les enfants du Sud marocain et soirée officielle de clôture.</p>
+        <div class="timeline-item spotlight-card">
+          <div class="timeline-dot highlight"></div>
+          <span class="timeline-step" style="color: var(--rally-red-bright);">Étape 5 · L'Arrivée Finale</span>
+          <h3>Marrakech — Ligne d'Arrivée &amp; Remise des Dons</h3>
+          <p>Arrivée triomphale à Marrakech, bilan de la distribution du matériel scolaire et sportif avec les enfants du Sud marocain et soirée officielle de clôture avant la remontée vers Saint-Malo.</p>
+          <div class="stage-meta">
+            <span class="stage-pill">🏆 Arrivée Officielle à Marrakech</span>
+            <span class="stage-pill">🤝 Remise des dons Enfants du Désert</span>
+            <span class="stage-pill">🔄 Retour vers la Bretagne</span>
+          </div>
         </div>
 
       </div>
-
     </div>
   </section>
 
   <hr class="divider">
 
   <!-- 4. LA MISSION SOLIDAIRE -->
-  <section id="partenaire">
+  <section id="partenaire" class="reveal">
     <div class="km"><span class="km-dot"></span><span class="km-label">Km 4200 — Sud marocain</span></div>
-    <div class="section-inner" style="max-width:100%;">
+    <div class="section-inner full">
       <p class="eyebrow">Notre mission solidaire</p>
       <h2 class="title">Plus qu'une course, une cause</h2>
-      <p>Nous roulons avec l'association <strong>Enfants du Désert</strong>, qui œuvre pour l'éducation des enfants du Sud marocain. Chaque kilomètre parcouru sert aussi à financer et acheminer des fournitures scolaires jusqu'aux villages les plus isolés.</p>
+      <p>Nous roulons avec l'association <strong>Enfants du Désert</strong>, qui œuvre pour l'accès à l'éducation des enfants de la province d'Errachidia et du Sud marocain. Chaque kilomètre parcouru sert à financer la construction d'écoles et à acheminer directement des fournitures scolaires et sportives jusqu'aux villages isolés.</p>
 
       <img src="aide humanitaire.jpg" alt="Regroupement des dons humanitaires dans le désert lors du 4L Trophy" class="featured-img">
 
-      <div class="partner-box">
-        <img src="logo-asso.png" alt="Logo de l'association Enfants du Désert" class="partner-logo">
-        
-        <div>
-          <h3 style="font-size:16px; letter-spacing:0.04em;">Association partenaire</h3>
-          <p style="font-size:14px; margin-top:6px;">Fournitures scolaires acheminées directement aux enfants du Sud marocain à l'arrivée du raid.</p>
+      <!-- Détail concret de ce que nous emportons -->
+      <div class="cards-grid" style="margin-bottom: 28px;">
+        <div class="info-card spotlight-card">
+          <h3>🎒 Matériel Scolaire</h3>
+          <p>Cartables, cahiers, trousses garnies, stylos, ardoises et matériel géométrique collectés en Bretagne pour équiper les écoliers.</p>
         </div>
+        <div class="info-card spotlight-card">
+          <h3>⚽ Équipements Sportifs</h3>
+          <p>Ballons, maillots, baskets et jeux éducatifs afin de favoriser l'épanouissement des enfants à travers le sport.</p>
+        </div>
+        <div class="info-card spotlight-card">
+          <h3>🧱 Construction d'Écoles</h3>
+          <p>Participation financière au projet global de construction de salles de classe, jardins d'enfants et panneaux photovoltaïques.</p>
+        </div>
+      </div>
+
+      <div class="partner-box spotlight-card">
+        <img src="logo-asso.png" alt="Logo de l'association Enfants du Désert" class="partner-logo">
+        <div style="flex: 1;">
+          <h3 style="font-size: 19px; color: var(--sand);">Association partenaire : Enfants du Désert</h3>
+          <p style="font-size: 14.5px; margin-top: 6px; color: var(--muted);">Fournitures scolaires et équipements acheminés directement aux enfants du Sud marocain lors du raid. Vous souhaitez faire un don de fournitures scolaires à Saint-Malo ? Écrivez-nous !</p>
+        </div>
+        <a href="contact.html" class="btn ghost">Faire un don matériel</a>
       </div>
     </div>
   </section>
 
 </div>
-<footer>Nathan & Clément — 4L Trophy 2028 · Bretagne → Sahara</footer>
+
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Association C'est Beau 2 Rêver</h4>
+      <p>Association loi 1901 fondée par Nathan et Clément pour organiser et financer leur participation solidaire au 4L Trophy 2028 au départ de Saint-Malo.</p>
+      <p style="margin-top: 12px;"><a href="mailto:cestbeau2rever@gmail.com">✉️ cestbeau2rever@gmail.com</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">Accueil &amp; Équipage</a></li>
+        <li><a href="projet.html">Le Projet &amp; La 4L</a></li>
+        <li><a href="sponsors.html">Simulateur 3D &amp; Tarifs</a></li>
+        <li><a href="contact.html">Budget &amp; Contact</a></li>
+        <li><a href="dossier_sponsoring.pdf" target="_blank">Dossier Sponsoring (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suivez la préparation</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener">📸 Instagram</a></li>
+        <li><a href="https://www.tiktok.com/" target="_blank" rel="noopener">🎵 TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026-2028 Association C'est Beau 2 Rêver — Équipage Nathan &amp; Clément</span>
+    <span>Saint-Malo, Bretagne → Désert de Merzouga</span>
+  </div>
+</footer>
+
+<!-- SCRIPTS D'ANIMATIONS & D'ONGLETS -->
+<script>
+  // 1. Menu Mobile
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+
+  // 2. Onglets interactifs de l'atelier mécanique
+  function openGarageTab(evt, panelId) {
+    document.querySelectorAll('.garage-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.garage-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(panelId).classList.add('active');
+    evt.currentTarget.classList.add('active');
+  }
+
+  // 3. Apparition au scroll & illumination des bornes KM
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const km = entry.target.querySelector('.km');
+        if (km) km.classList.add('reached');
+      }
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  // 4. Progression de la ligne de route & Barre supérieure au scroll
+  const scrollBar = document.getElementById('scroll-progress-bar');
+  const spineFill = document.getElementById('route-spine-fill');
+  const routeContainer = document.getElementById('route-container');
+  const mainNav = document.getElementById('main-nav');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const globalPct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
+    if (scrollBar) scrollBar.style.width = globalPct + '%';
+
+    if (scrollTop > 40) {
+      mainNav.classList.add('scrolled');
+    } else {
+      mainNav.classList.remove('scrolled');
+    }
+
+    if (routeContainer && spineFill) {
+      const rect = routeContainer.getBoundingClientRect();
+      const triggerPoint = window.innerHeight * 0.6;
+      const scrolledInRoute = triggerPoint - rect.top;
+      const routePct = Math.max(0, Math.min(100, (scrolledInRoute / rect.height) * 100));
+      spineFill.style.setProperty('--spine-height', routePct + '%');
+    }
+  }, { passive: true });
+
+  // 5. Effet Halo Spotlight sur les cartes
+  document.querySelectorAll('.spotlight-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+  });
+
+  // 6. Particules de sable doré dans le Hero
+  const canvas = document.getElementById('sand-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+
+    function initParticles() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      particles = Array.from({ length: 30 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2 + 0.6,
+        vx: Math.random() * 0.6 + 0.15,
+        vy: -Math.random() * 0.35 - 0.05,
+        alpha: Math.random() * 0.45 + 0.1
+      }));
+    }
+
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 160, 99, ${p.alpha})`;
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+
+    initParticles();
+    drawParticles();
+    window.addEventListener('resize', initParticles);
+  }
+</script>
 </body>
 </html>
