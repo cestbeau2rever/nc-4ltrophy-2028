@@ -3,99 +3,376 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Contact & Budget — N&C 4L Trophy 2028</title>
+  <title>Contact & Budget — N&C 4L Trophy 2028 | C'est Beau 2 Rêver</title>
+  <meta name="description" content="Découvrez le budget prévisionnel et l'avancée de la cagnotte de Nathan et Clément pour le 4L Trophy 2028. Contactez notre association C'est Beau 2 Rêver à Saint-Malo.">
+  
   <link rel="icon" type="image/png" href="logo_cb2r.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Literata:ital,wght@0,400;0,500;0,600;1,400&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* ---------- STYLES SPÉCIFIQUES PAGE CONTACT & BUDGET ---------- */
+    
+    /* Barre de répartition proportionnelle du budget */
+    .budget-split-wrap {
+      margin: 28px 0 10px;
+      background: var(--card);
+      border: 1px solid var(--border-dark);
+      border-radius: 8px;
+      padding: 20px 24px;
+    }
+    .split-bar {
+      display: flex;
+      height: 14px;
+      border-radius: 7px;
+      overflow: hidden;
+      gap: 4px;
+      margin: 12px 0 14px;
+    }
+    .split-seg {
+      height: 100%;
+      transition: filter 0.2s ease;
+    }
+    .split-seg:hover {
+      filter: brightness(1.2);
+    }
+    .split-legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      color: var(--muted);
+    }
+    .legend-dot {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 6px;
+    }
+
+    /* Jauge de la cagnotte */
+    .cagnotte-card {
+      background: linear-gradient(145deg, #212730, #171b22);
+      border: 1px solid var(--sand-deep);
+      border-radius: 10px;
+      padding: 36px 32px 28px;
+      margin-top: 34px;
+      box-shadow: 0 16px 38px rgba(0, 0, 0, 0.45);
+    }
+    .cagnotte-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-bottom: 48px;
+    }
+    .cagnotte-pct {
+      font-family: 'Oswald', sans-serif;
+      font-size: 36px;
+      color: var(--sand);
+      line-height: 1;
+    }
+    .track-road {
+      position: relative;
+      width: 100%;
+      height: 12px;
+      background: var(--ink);
+      border: 1px solid var(--border-dark);
+      border-radius: 6px;
+      margin-bottom: 22px;
+    }
+    #progress-fill {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--sand), var(--rally-red));
+      border-radius: 6px;
+      width: 0%;
+      box-shadow: 0 0 12px rgba(200, 64, 46, 0.5);
+      transition: width 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #progress-car {
+      position: absolute;
+      top: -36px;
+      left: 0%;
+      transform: translateX(-50%);
+      transition: left 1.8s cubic-bezier(0.22, 1, 0.36, 1);
+      z-index: 5;
+    }
+    .milestones-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-top: 22px;
+      padding-top: 18px;
+      border-top: 1px solid var(--line);
+      text-align: center;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11.5px;
+      color: var(--muted);
+    }
+    .milestone-step strong {
+      display: block;
+      color: var(--paper);
+      font-size: 13px;
+      margin-bottom: 2px;
+    }
+
+    /* Cartes Parrainage au Kilomètre */
+    .km-tier-card {
+      background: var(--card);
+      border: 1px solid var(--border-dark);
+      border-top: 3px solid var(--sand);
+      border-radius: 8px;
+      padding: 24px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.25s var(--ease-out);
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .km-tier-card:hover {
+      border-color: var(--rally-red);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 26px rgba(0, 0, 0, 0.4);
+    }
+    .km-badge {
+      display: inline-block;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 11px;
+      color: var(--sand);
+      background: var(--ink);
+      border: 1px solid var(--border-dark);
+      padding: 4px 10px;
+      border-radius: 20px;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+    }
+
+    /* Boutons Réseaux Sociaux */
+    .social-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+    .social-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 24px;
+      border-radius: 6px;
+      font-family: 'Oswald', sans-serif;
+      font-size: 18px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--paper);
+      border: 1px solid var(--border-dark);
+      background: var(--card);
+      transition: all 0.25s var(--ease-out);
+    }
+    .social-btn.insta {
+      background: linear-gradient(135deg, #c8402e, #9e2a1b);
+      border-color: var(--rally-red);
+    }
+    .social-btn.tiktok {
+      background: #14181f;
+      border-color: var(--sand);
+    }
+    .social-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+      color: var(--paper);
+    }
+
+    .copy-mail-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--ink);
+      border: 1px solid var(--border-dark);
+      color: var(--sand);
+      padding: 6px 12px;
+      border-radius: 4px;
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      cursor: pointer;
+      margin-top: 6px;
+      transition: border-color 0.2s;
+    }
+    .copy-mail-pill:hover {
+      border-color: var(--sand);
+      color: var(--paper);
+    }
+  </style>
 </head>
 <body>
 
-<nav class="navbar">
-  <div class="nav-brand">N&C 2028</div>
-  <div class="nav-links">
+<!-- Barre de progression de lecture globale -->
+<div id="scroll-progress-bar"></div>
+
+<!-- NAVIGATION -->
+<nav class="navbar" id="main-nav">
+  <a href="index.html" class="nav-brand">
+    <img src="logo_cb2r.png" alt="Logo C'est Beau 2 Rêver">
+    <div>
+      N&amp;C 2028
+      <span class="nav-brand-sub">C'est Beau 2 Rêver</span>
+    </div>
+  </a>
+  <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">☰</button>
+  <div class="nav-links" id="nav-links">
     <a href="index.html">Accueil</a>
     <a href="projet.html">Le Projet</a>
     <a href="sponsors.html">Sponsors</a>
-    <a href="contact.html" class="active">Contact & Budget</a>
+    <a href="contact.html" class="active">Contact &amp; Budget</a>
+    <a href="sponsors.html#tarifs-sponsors" class="nav-cta">Devenir Sponsor</a>
   </div>
 </nav>
 
+<!-- HERO -->
 <header class="hero small">
+  <canvas id="sand-canvas" aria-hidden="true"></canvas>
+
+  <svg class="hero-compass" viewBox="0 0 200 200" fill="none" stroke="#c9a063" stroke-width="1" aria-hidden="true">
+    <circle cx="100" cy="100" r="90" stroke-dasharray="4 4"/>
+    <circle cx="100" cy="100" r="65"/>
+    <polygon points="100,10 112,88 190,100 112,112 100,190 88,112 10,100 88,88" fill="rgba(201,160,99,0.15)"/>
+  </svg>
+
+  <div class="hero-dunes" aria-hidden="true">
+    <svg viewBox="0 0 1200 200" preserveAspectRatio="none">
+      <path d="M0,160 C200,100 350,190 550,140 C750,90 900,170 1200,110 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.12)"/>
+      <path d="M0,180 C250,140 450,200 700,160 C900,130 1050,190 1200,150 L1200,200 L0,200 Z" fill="rgba(201,160,99,0.07)"/>
+    </svg>
+  </div>
+
   <div class="hero-content">
-    <span class="stamp">Transparence & Échange</span>
-    <h1>Contact & <span class="accent">Budget</span></h1>
+    <span class="stamp">Transparence &amp; Échange</span>
+    <h1>Contact &amp; <span class="accent">Budget</span></h1>
+    <p class="hero-sub">Découvrez comment chaque euro est investi dans notre mission solidaire et écrivez-nous directement pour rejoindre l'aventure.</p>
   </div>
 </header>
 
-<div class="route-wrap">
+<!-- CORPS DE LA PAGE -->
+<div class="route-wrap" id="route-container">
+  <div class="route-spine-fill" id="route-spine-fill"></div>
   
   <!-- 1. SECTION BUDGET PRÉVISIONNEL -->
-  <section id="budget">
+  <section id="budget" class="reveal">
     <div class="km"><span class="km-dot"></span><span class="km-label">Km 6000 — Le Budget Prévisionnel</span></div>
-    <div class="section-inner" style="max-width:100%;">
+    <div class="section-inner full">
       <p class="eyebrow">Transparence financière</p>
       <h2 class="title">Où va l'argent de notre aventure ?</h2>
-      <p>Participer au 4L Trophy demande une organisation rigoureuse. Voici le détail estimé de notre budget global pour mener à bien notre périple de la Bretagne au Sahara.</p>
-      
+      <p>Participer au 4L Trophy demande une organisation rigoureuse. Voici le détail estimé de notre budget global pour mener à bien notre périple de Saint-Malo jusqu'au Sahara :</p>
 
-
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; margin-top: 30px;">
-        
+      <!-- Les 3 Cartes de Budget -->
+      <div class="cards-grid">
         <!-- Carte 1 : Inscription -->
-        <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 24px;">
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #c9a063; margin-bottom: 10px;">🚗 Inscription & Organisation</h3>
-          <p style="font-size: 28px; font-weight: bold; margin-bottom: 10px;">3 500 €</p>
-          <p style="color: #b0aba0; font-size: 14px;">Frais d'engagement auprès de l'organisation, hébergements bivouacs, ravitaillement, assistance mécanique et médicale sur tout le parcours.</p>
+        <div class="info-card spotlight-card">
+          <h3>🚗 Inscription &amp; Organisation</h3>
+          <div class="big-price" style="color: var(--rally-red-bright);">3 500 €</div>
+          <p>Frais d'engagement officiels auprès de l'organisation, traversée du détroit de Gibraltar en ferry, hébergements en bivouacs, roadbook et assistance mécanique et médicale sur tout le parcours.</p>
         </div>
 
         <!-- Carte 2 : Véhicule -->
-        <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 24px;">
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #c9a063; margin-bottom: 10px;">🛠️ Achat & Préparation 4L</h3>
-          <p style="font-size: 28px; font-weight: bold; margin-bottom: 10px;">3 000 €</p>
-          <p style="color: #b0aba0; font-size: 14px;">Achat de la Renault 4, pièces détachées, renforts de caisse, plaques de protection, révision moteur, pneumatiques tout-terrain et équipements de sécurité obligatoires.</p>
+        <div class="info-card spotlight-card">
+          <h3>🛠️ Achat &amp; Préparation 4L</h3>
+          <div class="big-price" style="color: var(--sand);">3 000 €</div>
+          <p>Achat de la Renault 4, pièces détachées neuves, renforts de châssis, plaques de protection aluminium, révision moteur complète, pneumatiques tout-terrain et équipements de sécurité obligatoires.</p>
         </div>
 
         <!-- Carte 3 : Frais de route -->
-        <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 24px;">
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; color: #c9a063; margin-bottom: 10px;">⛽ Essence, Péages & Divers</h3>
-          <p style="font-size: 28px; font-weight: bold; margin-bottom: 10px;">2 500 €</p>
-          <p style="color: #b0aba0; font-size: 14px;">Carburant pour les 6 000 km aller-retour entre la Bretagne et le Maroc, péages autoroutiers, assurance spécifique raid et équipements personnels.</p>
+        <div class="info-card spotlight-card">
+          <h3>⛽ Essence, Péages &amp; Divers</h3>
+          <div class="big-price" style="color: var(--paper);">2 500 €</div>
+          <p>Carburant pour les 6 000 km aller-retour entre la Bretagne et le Maroc, péages autoroutiers, assurance spécifique raid, flocage publicitaire et logistique de l'association.</p>
         </div>
-
       </div>
 
-      <div style="background: #191e25; border-left: 4px solid #c8402e; padding: 20px; margin-top: 30px; border-radius: 0 8px 8px 0;">
-        <p style="font-size: 16px; margin: 0;"><strong>Budget Total Estimé : ~9 000 € à 10 000 €</strong> — Financé en partie par nos emplacements publicitaires sur la voiture, nos fonds propres et des actions solidaires.</p>
+      <!-- Barre visuelle de répartition -->
+      <div class="budget-split-wrap">
+        <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px;">
+          <strong style="font-family: 'Oswald', sans-serif; text-transform: uppercase; letter-spacing: 0.04em; font-size: 16px;">Budget Total Estimé : ~9 000 € à 10 000 €</strong>
+          <span class="mono" style="font-size: 12px; color: var(--sand);">Association Loi 1901 C'est Beau 2 Rêver</span>
+        </div>
+        <div class="split-bar" aria-hidden="true">
+          <div class="split-seg" style="width: 39%; background: var(--rally-red);" title="Inscription & Organisation (39%)"></div>
+          <div class="split-seg" style="width: 33%; background: var(--sand);" title="Achat & Préparation 4L (33%)"></div>
+          <div class="split-seg" style="width: 28%; background: #5a667a;" title="Essence, Péages & Divers (28%)"></div>
+        </div>
+        <div class="split-legend">
+          <span><i class="legend-dot" style="background: var(--rally-red);"></i>39 % Inscription &amp; Raid (3 500 €)</span>
+          <span><i class="legend-dot" style="background: var(--sand);"></i>33 % Véhicule &amp; Mécanique (3 000 €)</span>
+          <span><i class="legend-dot" style="background: #5a667a;"></i>28 % Carburant, Péages &amp; Flocage (2 500 €)</span>
+        </div>
       </div>
 
-
-
-<!-- BARRE DE PROGRESSION BUDGET -->
-      <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 40px 30px 20px 30px; margin-bottom: 40px; text-align: center;">
-        <h3 style="font-family: 'Oswald', sans-serif; font-size: 20px; text-transform: uppercase; margin-bottom: 40px; color: #f3efe4;">L'avancée de notre cagnotte</h3>
+      <!-- BARRE DE PROGRESSION CAGNOTTE ANIMÉE -->
+      <div class="cagnotte-card" id="cagnotte-trigger">
+        <div class="cagnotte-header">
+          <div>
+            <span class="eyebrow" style="margin-bottom: 4px;">Objectif Départ 2028</span>
+            <h3 style="font-size: 24px; color: var(--paper);">L'avancée de notre cagnotte</h3>
+          </div>
+          <div class="cagnotte-pct"><span id="pourcentage-affiche">0</span> %</div>
+        </div>
         
         <!-- La route / jauge -->
-        <div style="position: relative; width: 100%; height: 8px; background: #12151b; border-radius: 4px; margin-bottom: 20px;">
+        <div class="track-road">
+          <!-- Le remplissage -->
+          <div id="progress-fill"></div>
           
-          <!-- Le remplissage rouge -->
-          <div id="progress-fill" style="position: absolute; top: 0; left: 0; height: 100%; background: #c8402e; border-radius: 4px; width: 0%; transition: width 1.5s ease-in-out;"></div>
-          
-          <!-- Ta petite voiture dessinée -->
-          <div id="progress-car" style="position: absolute; top: -30px; left: 0%; transform: translateX(-50%); transition: left 1.5s ease-in-out;">
-            <!-- C'est ici que tu mettras le nom de ton futur dessin ! -->
-            <img src="voiture-dessin.png" alt="Notre 4L" style="height: 40px; display: block;">
+          <!-- La petite 4L (image personnalisée + SVG de secours automatique) -->
+          <div id="progress-car">
+            <img 
+              src="voiture-dessin.png" 
+              alt="Notre 4L" 
+              style="height: 38px; display: block;"
+              onerror="this.style.display='none'; document.getElementById('car-svg-fallback').style.display='block';"
+            >
+            <!-- Silhouette SVG de 4L affichée automatiquement si voiture-dessin.png n'est pas encore sur GitHub -->
+            <svg id="car-svg-fallback" style="display: none; width: 46px; height: 28px;" viewBox="0 0 64 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 26L8 12C8.5 9 11 7 14 7H36C39 7 42 9 44 13L48 18H56C58 18 60 20 60 22V26H6Z" fill="#c8402e" stroke="#f3efe4" stroke-width="2"/>
+              <rect x="13" y="10" width="10" height="7" rx="1" fill="#12151b"/>
+              <polygon points="26,10 38,10 42,17 26,17" fill="#12151b"/>
+              <circle cx="16" cy="27" r="6" fill="#12151b" stroke="#c9a063" stroke-width="2.5"/>
+              <circle cx="48" cy="27" r="6" fill="#12151b" stroke="#c9a063" stroke-width="2.5"/>
+            </svg>
           </div>
           
           <!-- Ligne d'arrivée (Drapeau) -->
-          <div style="position: absolute; top: -25px; right: 0; font-size: 24px;">🏁</div>
+          <div style="position: absolute; top: -28px; right: -4px; font-size: 22px;">🏁</div>
         </div>
 
         <!-- Les montants -->
         <div style="display: flex; justify-content: space-between; font-family: 'IBM Plex Mono', monospace; font-size: 14px;">
-          <span style="color: #c8402e; font-weight: bold;"><span id="montant-actuel">0</span> € récoltés</span>
-          <span style="color: #b0aba0;">Objectif : <span id="montant-objectif">10000</span> €</span>
+          <span style="color: var(--rally-red-bright); font-weight: 600;"><span id="montant-actuel">0</span> € récoltés</span>
+          <span style="color: var(--muted);">Objectif : <span id="montant-objectif">10 000</span> €</span>
+        </div>
+
+        <!-- Les 3 grands paliers -->
+        <div class="milestones-row">
+          <div class="milestone-step">
+            <strong>Palier 1 · 3 000 €</strong>
+            <span>Achat &amp; Prépa de la 4L</span>
+          </div>
+          <div class="milestone-step">
+            <strong>Palier 2 · 6 500 €</strong>
+            <span>Inscription Officielle Validée</span>
+          </div>
+          <div class="milestone-step">
+            <strong>Palier 3 · 10 000 €</strong>
+            <span>Départ Saint-Malo → Sahara</span>
+          </div>
         </div>
       </div>
 
@@ -104,95 +381,348 @@
 
   <hr class="divider">
 
-  <!-- 2. SECTION CONTACT -->
-  <section id="contact">
+  <!-- 2. SECTION PARRAINAGE DE KILOMÈTRES (PARTICULIERS & PROCHES) -->
+  <section id="kilometres" class="reveal">
+    <div class="km"><span class="km-dot"></span><span class="km-label">Km 6250 — Coup de pouce Solidaire</span></div>
+    <div class="section-inner full">
+      <p class="eyebrow">Famille, Amis &amp; Particuliers</p>
+      <h2 class="title">Parrainez nos kilomètres jusqu'à Marrakech !</h2>
+      <p>Vous n'êtes pas une entreprise mais vous souhaitez nous aider à prendre le départ ? Vous pouvez acheter symboliquement des kilomètres de notre parcours ! Cliquez sur un palier ci-dessous pour nous envoyer votre participation :</p>
+
+      <div class="cards-grid">
+        <div class="km-tier-card spotlight-card" onclick="selectKmSupport('Parrainage 10 km (20 €) — Cap sur la Bretagne')">
+          <div>
+            <span class="km-badge">10 Kilomètres</span>
+            <div class="big-price" style="color: var(--sand);">20 €</div>
+            <p style="font-size: 14px; color: var(--muted);">Votre prénom inscrit sur la carrosserie de notre 4L + un grand merci sur nos réseaux sociaux !</p>
+          </div>
+          <span class="mono" style="font-size: 12px; color: var(--rally-red-bright); margin-top: 16px; display: block;">Choisir ce palier →</span>
+        </div>
+
+        <div class="km-tier-card spotlight-card" onclick="selectKmSupport('Parrainage 25 km (50 €) — Traversée de l\'Espagne')">
+          <div>
+            <span class="km-badge">25 Kilomètres</span>
+            <div class="big-price" style="color: var(--sand);">50 €</div>
+            <p style="font-size: 14px; color: var(--muted);">Votre prénom sur la 4L + une carte postale officielle écrite et envoyée depuis le Maroc pendant le raid !</p>
+          </div>
+          <span class="mono" style="font-size: 12px; color: var(--rally-red-bright); margin-top: 16px; display: block;">Choisir ce palier →</span>
+        </div>
+
+        <div class="km-tier-card spotlight-card" onclick="selectKmSupport('Parrainage 50 km (100 €) — Dunes de Merzouga')">
+          <div>
+            <span class="km-badge">50 Kilomètres</span>
+            <div class="big-price" style="color: var(--sand);">100 €</div>
+            <p style="font-size: 14px; color: var(--muted);">Votre prénom en grand sur la 4L + carte postale du désert + un baptême en 4L à Saint-Malo à notre retour !</p>
+          </div>
+          <span class="mono" style="font-size: 12px; color: var(--rally-red-bright); margin-top: 16px; display: block;">Choisir ce palier →</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- 3. SECTION CONTACT -->
+  <section id="contact" class="reveal">
     <div class="km"><span class="km-dot"></span><span class="km-label">Km 6500 — Point d'Arrivée</span></div>
-    <div class="section-inner" style="max-width:100%;">
+    <div class="section-inner full">
       <p class="eyebrow">Échangeons</p>
-      <h2 class="title">Contactez Nathan & Clément</h2>
-      <p>Une question sur notre projet, envie de devenir partenaire ou simplement de nous donner un coup de pouce ? Écrivez-nous directement !</p>
+      <h2 class="title">Contactez Nathan &amp; Clément</h2>
+      <p>Une question sur notre projet, envie de devenir partenaire, de nous proposer une 4L ou simplement de nous donner un coup de pouce ? Écrivez-nous directement !</p>
       
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 40px; margin-top: 30px;">
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 32px; margin-top: 30px;">
         
         <!-- Coordonnées directes -->
-        <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 30px;">
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 22px; text-transform: uppercase; margin-bottom: 20px; color: #c9a063;">Nos Coordonnées</h3>
+        <div class="info-card spotlight-card" style="padding: 32px;">
+          <h3 style="font-size: 22px; margin-bottom: 20px;">Nos Coordonnées</h3>
           
-          <p style="margin-bottom: 15px;"><strong>📍 Point de départ :</strong> Bretagne, France</p>
-          <p style="margin-bottom: 15px;"><strong>✉️ E-mail direct :</strong> <a href="mailto:cestbeau2rever@gmail.com" style="color: #c8402e; text-decoration: none;">cestbeau2rever@gmail.com</a></p>
-          <p style="margin-bottom: 15px;"><strong>🏁 Objectif :</strong> 4L Trophy 2028</p>
+          <p style="margin-bottom: 14px; color: var(--paper);"><strong>🏛️ Association :</strong> C'est Beau 2 Rêver (Loi 1901)</p>
+          <p style="margin-bottom: 14px; color: var(--paper);"><strong>📍 Point de départ :</strong> Saint-Malo, Bretagne</p>
+          <p style="margin-bottom: 14px; color: var(--paper);"><strong>🏁 Objectif :</strong> 4L Trophy 2028</p>
+          <div style="margin-bottom: 18px;">
+            <p style="color: var(--paper); margin-bottom: 4px;"><strong>✉️ E-mail direct :</strong></p>
+            <a href="mailto:cestbeau2rever@gmail.com" style="color: var(--rally-red-bright); font-family: 'IBM Plex Mono', monospace; font-size: 14px;">cestbeau2rever@gmail.com</a>
+            <br>
+            <button type="button" class="copy-mail-pill" onclick="copyDirectEmail()">📋 Copier l'adresse e-mail</button>
+          </div>
 
-          <hr style="border: none; border-top: 1px solid #3a4454; margin: 25px 0;">
+          <hr style="border: none; border-top: 1px solid var(--border-dark); margin: 24px 0;">
 
-          <h4 style="font-family: 'Oswald', sans-serif; font-size: 18px; margin-bottom: 10px;">Suivez notre préparation :</h4>
-          <p style="color: #b0aba0; font-size: 14px;">Bientôt disponibles sur nos réseaux sociaux pour suivre chaque étape de la restauration de notre 4L !</p>
+          <h4 style="font-size: 18px; margin-bottom: 10px;">Dossier de partenariat :</h4>
+          <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Retrouvez notre présentation complète, notre budget et le plan de marquage en version PDF imprimable :</p>
+          <a href="dossier_sponsoring.pdf" target="_blank" class="btn gold" style="width: 100%; font-size: 14px;">📄 Ouvrir le Dossier Sponsoring (PDF)</a>
         </div>
 
         <!-- Formulaire de contact direct -->
-        <div style="background: #1d2229; border: 1px solid #3a4454; border-radius: 8px; padding: 30px;">
-          <h3 style="font-family: 'Oswald', sans-serif; font-size: 22px; text-transform: uppercase; margin-bottom: 20px;">Envoyez-nous un message</h3>
+        <div class="form-card" id="contact-form-box">
+          <h3 style="font-size: 22px; margin-bottom: 20px;">Envoyez-nous un message</h3>
           
           <form onsubmit="sendContactEmail(event)">
-            <label style="display:block; margin-bottom:8px; font-family:'IBM Plex Mono'; font-size:13px; text-transform:uppercase;">Votre Nom / Entreprise :</label>
-            <input type="text" id="contact-name" required style="width: 100%; padding: 12px; background: #12151b; color: #f3efe4; border: 1px solid #8b8579; border-radius: 4px; margin-bottom: 15px;">
+            <label class="form-label" for="contact-topic">Objet de votre message :</label>
+            <select id="contact-topic" class="form-select">
+              <option value="Demande d'information générale">💬 Question / Message d'encouragement</option>
+              <option value="Proposition de Partenariat Entreprise">🏢 Devenir Sponsor / Partenaire Entreprise</option>
+              <option value="Parrainage de kilomètres (Particulier)">💛 Parrainer des kilomètres (Particulier)</option>
+              <option value="Proposition de 4L / Pièces / Mécanique">🛠️ Proposer une 4L, des pièces ou un coup de main</option>
+              <option value="Don de fournitures scolaires (Enfants du Désert)">🎒 Don de fournitures scolaires / sportives</option>
+            </select>
 
-            <label style="display:block; margin-bottom:8px; font-family:'IBM Plex Mono'; font-size:13px; text-transform:uppercase;">Votre Adresse E-mail :</label>
-            <input type="email" id="contact-email" required style="width: 100%; padding: 12px; background: #12151b; color: #f3efe4; border: 1px solid #8b8579; border-radius: 4px; margin-bottom: 15px;">
+            <label class="form-label" for="contact-name">Votre Nom / Entreprise :</label>
+            <input type="text" id="contact-name" class="form-input" placeholder="Ex: Thomas / Entreprise Malouine" required>
 
-            <label style="display:block; margin-bottom:8px; font-family:'IBM Plex Mono'; font-size:13px; text-transform:uppercase;">Votre Message :</label>
-            <textarea id="contact-message" rows="4" required style="width: 100%; padding: 12px; background: #12151b; color: #f3efe4; border: 1px solid #8b8579; border-radius: 4px; margin-bottom: 20px; font-family: inherit;"></textarea>
+            <label class="form-label" for="contact-email">Votre Adresse E-mail (ou Téléphone) :</label>
+            <input type="text" id="contact-email" class="form-input" placeholder="Ex: contact@exemple.fr ou 06..." required>
 
-            <button type="submit" class="btn primary" style="background: #c8402e; color: #f3efe4; padding: 14px 26px; border: none; text-transform: uppercase; font-family: 'Oswald'; cursor: pointer; border-radius: 2px; width: 100%;">Envoyer le message</button>
+            <label class="form-label" for="contact-message">Votre Message :</label>
+            <textarea id="contact-message" rows="4" class="form-textarea" placeholder="Écrivez votre message à Nathan et Clément..." required></textarea>
+
+            <button type="submit" class="btn primary" style="width: 100%;">Envoyer le message</button>
           </form>
+
+          <!-- Boîte de secours presse-papier -->
+          <div id="contact-fallback" class="fallback-notice">
+            <strong>✅ Votre message est prêt !</strong><br>
+            Si votre boîte mail ne s'est pas ouverte toute seule, cliquez ci-dessous pour copier votre message et envoyez-le à <strong>cestbeau2rever@gmail.com</strong> :
+            <div style="margin-top: 12px;">
+              <button type="button" class="btn gold" style="padding: 9px 16px; font-size: 13px;" onclick="copyPreparedContact()">📋 Copier mon message &amp; l'adresse mail</button>
+            </div>
+          </div>
         </div>
 
       </div>
 
+      <!-- RÉSEAUX SOCIAUX -->
+      <div style="margin-top: 56px; text-align: center;">
+        <h3 style="font-size: 24px; margin-bottom: 8px;">Suivez notre préparation en direct :</h3>
+        <p style="font-size: 15px; color: var(--muted); max-width: 560px; margin: 0 auto;">Rejoignez-nous sur nos réseaux pour vivre chaque étape de l'achat et de la restauration mécanique de notre 4L à Saint-Malo !</p>
+        
+        <div class="social-cards" style="max-width: 560px; margin: 24px auto 0;">
+          <a href="https://www.instagram.com/" target="_blank" rel="noopener" class="social-btn insta">
+            <span>📸 Instagram</span>
+          </a>
+          <a href="https://www.tiktok.com/" target="_blank" rel="noopener" class="social-btn tiktok">
+            <span>🎵 TikTok</span>
+          </a>
+        </div>
+      </div>
+
     </div>
   </section>
-<!-- RÉSEAUX SOCIAUX -->
-<div style="text-align: center; margin: 50px 0;">
-  <h3 style="font-family: 'Oswald', sans-serif; color: #f3efe4; font-size: 24px; margin-bottom: 20px;">Suivez notre préparation en direct :</h3>
-  
-  <a href="https://www.instagram.com/ton_compte_instagram" target="_blank" style="display: inline-block; background-color: #c8402e; color: #fff; padding: 12px 25px; text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 18px; text-transform: uppercase; border-radius: 5px; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-    📸 Instagram
-  </a>
-  
-  <a href="https://www.tiktok.com/@ton_compte_tiktok" target="_blank" style="display: inline-block; background-color: #12151b; color: #fff; padding: 12px 25px; text-decoration: none; font-family: 'Oswald', sans-serif; font-size: 18px; text-transform: uppercase; border-radius: 5px; border: 1px solid #c9a063; margin: 10px; box-shadow: 0 4px 10px rgba(0,0,0,0.3);">
-    🎵 TikTok
-  </a>
-</div>
+
 </div>
 
-<footer>Nathan & Clément — 4L Trophy 2028 · Bretagne → Sahara</footer>
+<!-- FOOTER -->
+<footer class="site-footer">
+  <div class="footer-grid">
+    <div class="footer-col">
+      <h4>Association C'est Beau 2 Rêver</h4>
+      <p>Association loi 1901 fondée par Nathan et Clément pour organiser et financer leur participation solidaire au 4L Trophy 2028 au départ de Saint-Malo.</p>
+      <p style="margin-top: 12px;"><a href="mailto:cestbeau2rever@gmail.com">✉️ cestbeau2rever@gmail.com</a></p>
+    </div>
+    <div class="footer-col">
+      <h4>Navigation</h4>
+      <ul class="footer-links">
+        <li><a href="index.html">Accueil &amp; Équipage</a></li>
+        <li><a href="projet.html">Le Projet &amp; La 4L</a></li>
+        <li><a href="sponsors.html">Simulateur 3D &amp; Tarifs</a></li>
+        <li><a href="contact.html">Budget &amp; Contact</a></li>
+        <li><a href="dossier_sponsoring.pdf" target="_blank">Dossier Sponsoring (PDF)</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Suivez la préparation</h4>
+      <ul class="footer-links">
+        <li><a href="https://www.instagram.com/" target="_blank" rel="noopener">📸 Instagram</a></li>
+        <li><a href="https://www.tiktok.com/" target="_blank" rel="noopener">🎵 TikTok</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026-2028 Association C'est Beau 2 Rêver — Équipage Nathan &amp; Clément</span>
+    <span>Saint-Malo, Bretagne → Désert de Merzouga</span>
+  </div>
+</footer>
 
+<!-- SCRIPTS INTERACTIFS -->
 <script>
-  // Script spécifique pour le formulaire de contact
+  // =========================================================================
+  // 1. CONFIGURATION DE LA CAGNOTTE (Modifie simplement MONTANT_ACTUEL ici !)
+  // =========================================================================
+  const MONTANT_ACTUEL = 500;     // <-- Change ce nombre en euros au fil de vos sponsors !
+  const MONTANT_OBJECTIF = 10000;
+
+  let cagnotteAnimated = false;
+  function animateCagnotte() {
+    if (cagnotteAnimated) return;
+    cagnotteAnimated = true;
+
+    const pct = Math.min(100, Math.round((MONTANT_ACTUEL / MONTANT_OBJECTIF) * 100));
+    document.getElementById('montant-objectif').textContent = MONTANT_OBJECTIF.toLocaleString('fr-FR');
+    
+    // Animation de la barre et de la 4L
+    document.getElementById('progress-fill').style.width = pct + '%';
+    document.getElementById('progress-car').style.left = pct + '%';
+
+    // Animation du compteur en euros et du pourcentage
+    const duration = 1600;
+    const startTime = performance.now();
+    const step = (now) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      const ease = 1 - Math.pow(1 - progress, 4);
+      document.getElementById('montant-actuel').textContent = Math.floor(ease * MONTANT_ACTUEL).toLocaleString('fr-FR');
+      document.getElementById('pourcentage-affiche').textContent = Math.floor(ease * pct);
+      if (progress < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  // Déclenche l'animation de la cagnotte quand elle apparaît à l'écran
+  const cagnotteTrigger = document.getElementById('cagnotte-trigger');
+  if (cagnotteTrigger) {
+    const cagnotteObs = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) animateCagnotte();
+    }, { threshold: 0.25 });
+    cagnotteObs.observe(cagnotteTrigger);
+  }
+
+  // =========================================================================
+  // 2. SÉLECTION D'UN PALIER DE KILOMÈTRES (PARTICULIERS)
+  // =========================================================================
+  function selectKmSupport(tierText) {
+    const topicSelect = document.getElementById('contact-topic');
+    topicSelect.value = "Parrainage de kilomètres (Particulier)";
+    const msgBox = document.getElementById('contact-message');
+    msgBox.value = "Bonjour Nathan et Clément,\n\nJe souhaite vous soutenir en choisissant le palier : " + tierText + ".\nPouvez-vous m'indiquer comment effectuer ma participation (RIB / HelloAsso / Chèque) pour inscrire mon prénom sur la 4L ?\n\nBravo pour votre projet !";
+    document.getElementById('contact-form-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    document.getElementById('contact-name').focus();
+  }
+
+  // =========================================================================
+  // 3. ENVOI DU FORMULAIRE DE CONTACT & COPIE PRESSE-PAPIER
+  // =========================================================================
+  let lastContactClipboard = "";
+
   function sendContactEmail(event) {
-    // Empêche le rechargement de la page
     event.preventDefault();
     
-    // Récupère les infos du formulaire
-    const name = document.getElementById('contact-name').value;
-    const email = document.getElementById('contact-email').value;
-    const message = document.getElementById('contact-message').value;
+    const topic = document.getElementById('contact-topic').value;
+    const name = document.getElementById('contact-name').value.trim();
+    const email = document.getElementById('contact-email').value.trim();
+    const message = document.getElementById('contact-message').value.trim();
     
-    // Prépare l'e-mail mailto
     const emailTo = "cestbeau2rever@gmail.com";
-    const subject = encodeURIComponent("Message de contact (Site 4L) - " + name);
-    const body = encodeURIComponent(
+    const subjectText = "[" + topic + "] - " + name;
+    const bodyText =
       "Bonjour Nathan et Clément,\n\n" +
-      "Vous avez reçu un nouveau message depuis le site web :\n\n" +
+      "Objet : " + topic + "\n" +
       "Nom / Entreprise : " + name + "\n" +
-      "E-mail de contact : " + email + "\n\n" +
+      "Contact : " + email + "\n\n" +
       "Message :\n" + message + "\n\n" +
-      "Cordialement"
-    );
+      "Cordialement,\n" + name;
     
-    // Ouvre la boîte mail du client
-    window.location.href = "mailto:" + emailTo + "?subject=" + subject + "&body=" + body;
+    lastContactClipboard = "Destinataire : " + emailTo + "\nObjet : " + subjectText + "\n\n" + bodyText;
+    document.getElementById('contact-fallback').style.display = 'block';
+
+    window.location.href = "mailto:" + emailTo + "?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
+  }
+
+  function copyPreparedContact() {
+    navigator.clipboard.writeText(lastContactClipboard).then(() => {
+      alert("Votre message et l'adresse cestbeau2rever@gmail.com ont été copiés dans le presse-papier !");
+    });
+  }
+
+  function copyDirectEmail() {
+    navigator.clipboard.writeText("cestbeau2rever@gmail.com").then(() => {
+      alert("Adresse cestbeau2rever@gmail.com copiée dans le presse-papier !");
+    });
+  }
+
+  // =========================================================================
+  // 4. MENU MOBILE, SCROLL SPINE & PARTICULES DE SABLE
+  // =========================================================================
+  const navToggle = document.getElementById('nav-toggle');
+  const navLinks = document.getElementById('nav-links');
+  if (navToggle) {
+    navToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('open');
+      navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
+    });
+  }
+
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        const km = entry.target.querySelector('.km');
+        if (km) km.classList.add('reached');
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+  const scrollBar = document.getElementById('scroll-progress-bar');
+  const spineFill = document.getElementById('route-spine-fill');
+  const routeContainer = document.getElementById('route-container');
+  const mainNav = document.getElementById('main-nav');
+
+  window.addEventListener('scroll', () => {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    if (scrollBar) scrollBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
+    mainNav.classList.toggle('scrolled', scrollTop > 40);
+
+    if (routeContainer && spineFill) {
+      const rect = routeContainer.getBoundingClientRect();
+      const scrolledInRoute = (window.innerHeight * 0.6) - rect.top;
+      const routePct = Math.max(0, Math.min(100, (scrolledInRoute / rect.height) * 100));
+      spineFill.style.setProperty('--spine-height', routePct + '%');
+    }
+  }, { passive: true });
+
+  document.querySelectorAll('.spotlight-card').forEach(card => {
+    card.addEventListener('mousemove', e => {
+      const rect = card.getBoundingClientRect();
+      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+    });
+  });
+
+  const canvas = document.getElementById('sand-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let width, height, particles;
+    function initParticles() {
+      width = canvas.width = canvas.offsetWidth;
+      height = canvas.height = canvas.offsetHeight;
+      particles = Array.from({ length: 30 }, () => ({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        r: Math.random() * 2 + 0.6,
+        vx: Math.random() * 0.6 + 0.15,
+        vy: -Math.random() * 0.35 - 0.05,
+        alpha: Math.random() * 0.45 + 0.1
+      }));
+    }
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (const p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(201, 160, 99, ${p.alpha})`;
+        ctx.fill();
+        p.x += p.vx;
+        p.y += p.vy;
+        if (p.x > width) p.x = 0;
+        if (p.y < 0) p.y = height;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+    initParticles();
+    drawParticles();
+    window.addEventListener('resize', initParticles);
   }
 </script>
-
 </body>
 </html>
