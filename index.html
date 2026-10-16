@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12151b">
+  <script>document.documentElement.classList.add('js');</script>
   <title>Accueil — N&C 4L Trophy 2028 | Association C'est Beau 2 Rêver</title>
   <meta name="description" content="Découvrez l'équipage malouin Nathan et Clément (Association C'est Beau 2 Rêver) en route pour le 4L Trophy 2028. Aventure, solidarité et sponsoring à Saint-Malo.">
   
@@ -10,6 +12,7 @@
   <meta property="og:title" content="N&C 4L Trophy 2028 — Devenez Partenaire !">
   <meta property="og:description" content="Découvrez le projet de Nathan et Clément, deux cousins de Saint-Malo en route pour le 4L Trophy 2028. Embarquez avec nous dans le désert !">
   <meta property="og:image" content="https://natbat7.github.io/nc-4ltrophy-2028/logo_cb2r.png">
+  <meta property="og:type" content="website">
   <meta property="og:url" content="https://natbat7.github.io/nc-4ltrophy-2028/">
   
   <link rel="icon" type="image/png" href="logo_cb2r.png">
@@ -32,7 +35,7 @@
       <span class="nav-brand-sub">C'est Beau 2 Rêver</span>
     </div>
   </a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">☰</button>
+  <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
   <div class="nav-links" id="nav-links">
     <a href="index.html" class="active">Accueil</a>
     <a href="projet.html">Le Projet</a>
@@ -70,24 +73,24 @@
     <div class="cta-row">
       <a href="sponsors.html" class="btn primary">🚀 Configurateur 3D &amp; Espace Sponsors</a>
       <a href="projet.html" class="btn ghost">Découvrir notre projet</a>
-      <a href="dossier_sponsoring.pdf" target="_blank" class="btn gold">📄 Dossier Partenariat (PDF)</a>
+      <a href="dossier_sponsoring.pdf" target="_blank" rel="noopener" class="btn gold">📄 Dossier Partenariat (PDF)</a>
     </div>
 
     <div class="hero-meta">
       <div>
-        <span class="num"><span class="counter" data-target="6000">0</span> km</span>
+        <span class="num"><span class="counter" data-target="6000">6 000</span> km</span>
         <span class="lbl">France · Espagne · Maroc</span>
       </div>
       <div>
-        <span class="num">+<span class="counter" data-target="1300">0</span></span>
+        <span class="num">+<span class="counter" data-target="1300">1 300</span></span>
         <span class="lbl">Équipages engagés</span>
       </div>
       <div>
-        <span class="num"><span class="counter" data-target="12">0</span> jours</span>
+        <span class="num"><span class="counter" data-target="12">12</span> jours</span>
         <span class="lbl">De raid à la boussole</span>
       </div>
       <div>
-        <span class="num"><span class="counter" data-target="100">0</span> %</span>
+        <span class="num"><span class="counter" data-target="100">100</span> %</span>
         <span class="lbl">Déductible (Compte 623)</span>
       </div>
     </div>
@@ -162,14 +165,14 @@
       
       <div class="frame-row">
         <div class="frame">
-          <img src="photo-enfants.jpg" alt="Nathan et Clément enfants en 2008">
+          <img src="photo-enfants.jpg" loading="lazy" decoding="async" alt="Nathan et Clément enfants en 2008">
           <div class="frame-badge">
             <span>Les cousins aux débuts</span>
             <span class="date">07.12.2008</span>
           </div>
         </div>
         <div class="frame">
-          <img src="photo-aujourdhui.jpg" alt="Nathan et Clément aujourd'hui">
+          <img src="photo-aujourdhui.jpg" loading="lazy" decoding="async" alt="Nathan et Clément aujourd'hui">
           <div class="frame-badge">
             <span>Prêts pour le désert</span>
             <span class="date">Cap 2028</span>
@@ -286,7 +289,7 @@
         <li><a href="projet.html">Le Projet &amp; La 4L</a></li>
         <li><a href="sponsors.html">Simulateur 3D &amp; Tarifs</a></li>
         <li><a href="contact.html">Budget &amp; Contact</a></li>
-        <li><a href="dossier_sponsoring.pdf" target="_blank">Dossier Sponsoring (PDF)</a></li>
+        <li><a href="dossier_sponsoring.pdf" target="_blank" rel="noopener">Dossier Sponsoring (PDF)</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -303,141 +306,52 @@
   </div>
 </footer>
 
-<!-- SCRIPTS D'ANIMATIONS & INTERACTIONS -->
+<!-- MOTEUR COMMUN (menu, animations, route, particules...) -->
+<script src="main.js"></script>
+
+<!-- SCRIPT PROPRE À CETTE PAGE -->
 <script>
-  // 1. Menu Mobile
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
-    });
-  }
+  // =========================================================================
+  // COMPTE À REBOURS jusqu'au départ : 15 février 2028 à 12h00 (heure de Paris)
+  // =========================================================================
+  (function () {
+    const DATE_DEPART = new Date('2028-02-15T12:00:00+01:00').getTime();
+    const box = document.querySelector('.countdown-box');
+    const title = document.querySelector('.countdown-title');
+    const digits = { jours: 3, heures: 2, minutes: 2, secondes: 2 };
+    let timer;
 
-  // 2. Compte à rebours jusqu'au 15 Février 2028 à 12h00
-  const dateDepart = new Date("Feb 15, 2028 12:00:00").getTime();
-  function updateCountdown() {
-    const maintenant = new Date().getTime();
-    const diff = dateDepart - maintenant;
-    if (diff > 0) {
-      const j = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-      const s = Math.floor((diff % (1000 * 60)) / 1000);
-      document.getElementById("jours").textContent = String(j).padStart(2, '0');
-      document.getElementById("heures").textContent = String(h).padStart(2, '0');
-      document.getElementById("minutes").textContent = String(m).padStart(2, '0');
-      document.getElementById("secondes").textContent = String(s).padStart(2, '0');
-    }
-  }
-  updateCountdown();
-  setInterval(updateCountdown, 1000);
-
-  // 3. Compteurs animés dans le Hero
-  const counters = document.querySelectorAll('.counter');
-  const animateCounter = (el) => {
-    const target = +el.getAttribute('data-target');
-    const duration = 1800;
-    const startTime = performance.now();
-    const step = (now) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 4);
-      const current = Math.floor(ease * target);
-      el.textContent = current.toLocaleString('fr-FR');
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
-  };
-  counters.forEach(animateCounter);
-
-  // 4. Apparition au scroll (IntersectionObserver) & Illumination des bornes KM
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        const km = entry.target.querySelector('.km');
-        if (km) km.classList.add('reached');
+    function set(id, value) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const txt = String(value).padStart(digits[id], '0');
+      if (el.textContent === txt) return;
+      el.textContent = txt;
+      if (!CB2R.reduceMotion) {
+        el.classList.remove('flip');
+        void el.offsetWidth;
+        el.classList.add('flip');
       }
-    });
-  }, { threshold: 0.15 });
-
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  // 5. Progression de la ligne de route & Barre supérieure au scroll
-  const scrollBar = document.getElementById('scroll-progress-bar');
-  const spineFill = document.getElementById('route-spine-fill');
-  const routeContainer = document.getElementById('route-container');
-  const mainNav = document.getElementById('main-nav');
-
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    const globalPct = docHeight > 0 ? (scrollTop / docHeight) * 100 : 0;
-    if (scrollBar) scrollBar.style.width = globalPct + '%';
-
-    if (scrollTop > 40) {
-      mainNav.classList.add('scrolled');
-    } else {
-      mainNav.classList.remove('scrolled');
     }
 
-    if (routeContainer && spineFill) {
-      const rect = routeContainer.getBoundingClientRect();
-      const triggerPoint = window.innerHeight * 0.6;
-      const scrolledInRoute = triggerPoint - rect.top;
-      const routePct = Math.max(0, Math.min(100, (scrolledInRoute / rect.height) * 100));
-      spineFill.style.setProperty('--spine-height', routePct + '%');
-    }
-  }, { passive: true });
-
-  // 6. Effet Halo Spotlight sur les cartes au survol de la souris
-  document.querySelectorAll('.spotlight-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    });
-  });
-
-  // 7. Particules de sable doré dans le Hero (Canvas léger)
-  const canvas = document.getElementById('sand-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height, particles;
-
-    function initParticles() {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-      particles = Array.from({ length: 42 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 2 + 0.6,
-        vx: Math.random() * 0.6 + 0.15,
-        vy: -Math.random() * 0.35 - 0.05,
-        alpha: Math.random() * 0.45 + 0.1
-      }));
-    }
-
-    function drawParticles() {
-      ctx.clearRect(0, 0, width, height);
-      for (const p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(201, 160, 99, ${p.alpha})`;
-        ctx.fill();
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
+    function tick() {
+      const diff = DATE_DEPART - Date.now();
+      if (diff <= 0) {
+        ['jours', 'heures', 'minutes', 'secondes'].forEach((id) => set(id, 0));
+        if (box) box.classList.add('done');
+        if (title) title.textContent = "🏁 C'est parti ! Suivez le raid en direct sur nos réseaux";
+        clearInterval(timer);
+        return;
       }
-      requestAnimationFrame(drawParticles);
+      set('jours', Math.floor(diff / 86400000));
+      set('heures', Math.floor((diff % 86400000) / 3600000));
+      set('minutes', Math.floor((diff % 3600000) / 60000));
+      set('secondes', Math.floor((diff % 60000) / 1000));
     }
 
-    initParticles();
-    drawParticles();
-    window.addEventListener('resize', initParticles);
-  }
+    tick();
+    timer = setInterval(tick, 1000);
+  })();
 </script>
 </body>
 </html>
