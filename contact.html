@@ -3,9 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12151b">
+  <script>document.documentElement.classList.add('js');</script>
   <title>Contact & Budget — N&C 4L Trophy 2028 | C'est Beau 2 Rêver</title>
   <meta name="description" content="Découvrez le budget prévisionnel et l'avancée de la cagnotte de Nathan et Clément pour le 4L Trophy 2028. Contactez notre association C'est Beau 2 Rêver à Saint-Malo.">
   
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Contact & Budget — N&C 4L Trophy 2028 | C'est Beau 2 Rêver">
+  <meta property="og:description" content="Découvrez le budget prévisionnel et l'avancée de la cagnotte de Nathan et Clément pour le 4L Trophy 2028. Contactez notre association C'est Beau 2 Rêver à Saint-Malo.">
+  <meta property="og:image" content="https://natbat7.github.io/nc-4ltrophy-2028/logo_cb2r.png">
+
   <link rel="icon" type="image/png" href="logo_cb2r.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +40,8 @@
     }
     .split-seg {
       height: 100%;
-      transition: filter 0.2s ease;
+      border-radius: 7px;
+      transition: filter 0.2s ease, width 1.2s cubic-bezier(0.22, 1, 0.36, 1);
     }
     .split-seg:hover {
       filter: brightness(1.2);
@@ -122,6 +130,93 @@
       color: var(--paper);
       font-size: 13px;
       margin-bottom: 2px;
+      transition: color 0.4s ease;
+    }
+    .milestone-step.hit strong {
+      color: var(--sand);
+    }
+    .milestone-step.hit strong::before {
+      content: "✓ ";
+      color: #38c172;
+    }
+
+    /* Reflet qui balaie la jauge */
+    #progress-fill {
+      overflow: hidden;
+    }
+    #progress-fill::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+      transform: translateX(-100%);
+      animation: fillShine 2.6s 2s ease-in-out infinite;
+    }
+    @keyframes fillShine {
+      60%, 100% { transform: translateX(100%); }
+    }
+    /* La 4L tressaute pendant qu'elle roule */
+    #progress-car.driving img,
+    #progress-car.driving svg {
+      animation: carBounce 0.32s ease-in-out infinite;
+    }
+    @keyframes carBounce {
+      50% { transform: translateY(-2px) rotate(-1.5deg); }
+    }
+    /* Bornes des paliers sur la route */
+    .track-mark {
+      position: absolute;
+      top: 50%;
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      background: var(--ink);
+      border: 2px solid var(--border-dark);
+      transform: translate(-50%, -50%);
+      z-index: 3;
+      transition: background 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+    }
+    .track-mark.hit {
+      background: var(--sand);
+      border-color: var(--paper);
+      box-shadow: 0 0 10px var(--sand);
+    }
+    .finish-flag {
+      position: absolute;
+      top: -30px;
+      right: -6px;
+      font-size: 22px;
+      transform-origin: 20% 100%;
+      animation: flagWave 1.8s ease-in-out infinite;
+    }
+    @keyframes flagWave {
+      0%, 100% { transform: rotate(0deg); }
+      50% { transform: rotate(-9deg); }
+    }
+
+    /* Palier de kilomètres choisi */
+    .km-tier-card.selected {
+      border-color: var(--rally-red);
+      box-shadow: 0 0 0 1px var(--rally-red), 0 12px 26px rgba(0, 0, 0, 0.4);
+    }
+    .km-tier-card .big-price {
+      transition: transform 0.35s var(--ease-out);
+    }
+    .km-tier-card:hover .big-price {
+      transform: scale(1.08);
+    }
+    .km-badge {
+      transition: border-color 0.25s ease, color 0.25s ease;
+    }
+    .km-tier-card:hover .km-badge {
+      border-color: var(--sand);
+      color: var(--paper);
+    }
+
+    @media (max-width: 560px) {
+      .cagnotte-card { padding: 30px 18px 22px; }
+      .milestones-row { font-size: 10.5px; }
+      .milestone-step strong { font-size: 11.5px; }
     }
 
     /* Cartes Parrainage au Kilomètre */
@@ -159,7 +254,7 @@
     /* Boutons Réseaux Sociaux */
     .social-cards {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(220px, 100%), 1fr));
       gap: 16px;
       margin-top: 24px;
     }
@@ -191,6 +286,12 @@
       transform: translateY(-3px);
       box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
       color: var(--paper);
+    }
+    .social-btn.insta:hover {
+      box-shadow: 0 10px 28px rgba(200, 64, 46, 0.45);
+    }
+    .social-btn.tiktok:hover {
+      box-shadow: 0 10px 28px rgba(201, 160, 99, 0.3);
     }
 
     .copy-mail-pill {
@@ -228,7 +329,7 @@
       <span class="nav-brand-sub">C'est Beau 2 Rêver</span>
     </div>
   </a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">☰</button>
+  <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
   <div class="nav-links" id="nav-links">
     <a href="index.html">Accueil</a>
     <a href="projet.html">Le Projet</a>
@@ -334,7 +435,7 @@
           <!-- La petite 4L (image personnalisée + SVG de secours automatique) -->
           <div id="progress-car">
             <img 
-              src="voiture-dessin.png" 
+              src="voiture-dessin.png" loading="lazy" decoding="async" 
               alt="Notre 4L" 
               style="height: 38px; display: block;"
               onerror="this.style.display='none'; document.getElementById('car-svg-fallback').style.display='block';"
@@ -350,7 +451,7 @@
           </div>
           
           <!-- Ligne d'arrivée (Drapeau) -->
-          <div style="position: absolute; top: -28px; right: -4px; font-size: 22px;">🏁</div>
+          <div class="finish-flag" aria-hidden="true">🏁</div>
         </div>
 
         <!-- Les montants -->
@@ -390,7 +491,7 @@
       <p>Vous n'êtes pas une entreprise mais vous souhaitez nous aider à prendre le départ ? Vous pouvez acheter symboliquement des kilomètres de notre parcours ! Cliquez sur un palier ci-dessous pour nous envoyer votre participation :</p>
 
       <div class="cards-grid">
-        <div class="km-tier-card spotlight-card" onclick="selectKmSupport('Parrainage 10 km (20 €) — Cap sur la Bretagne')">
+        <div class="km-tier-card spotlight-card" onclick="selectKmSupport(this, 'Parrainage 10 km (20 €) — Cap sur la Bretagne')">
           <div>
             <span class="km-badge">10 Kilomètres</span>
             <div class="big-price" style="color: var(--sand);">20 €</div>
@@ -399,7 +500,7 @@
           <span class="mono" style="font-size: 12px; color: var(--rally-red-bright); margin-top: 16px; display: block;">Choisir ce palier →</span>
         </div>
 
-        <div class="km-tier-card spotlight-card" onclick="selectKmSupport('Parrainage 25 km (50 €) — Traversée de l\'Espagne')">
+        <div class="km-tier-card spotlight-card" onclick="selectKmSupport(this, 'Parrainage 25 km (50 €) — Traversée de l\'Espagne')">
           <div>
             <span class="km-badge">25 Kilomètres</span>
             <div class="big-price" style="color: var(--sand);">50 €</div>
@@ -408,7 +509,7 @@
           <span class="mono" style="font-size: 12px; color: var(--rally-red-bright); margin-top: 16px; display: block;">Choisir ce palier →</span>
         </div>
 
-        <div class="km-tier-card spotlight-card" onclick="selectKmSupport('Parrainage 50 km (100 €) — Dunes de Merzouga')">
+        <div class="km-tier-card spotlight-card" onclick="selectKmSupport(this, 'Parrainage 50 km (100 €) — Dunes de Merzouga')">
           <div>
             <span class="km-badge">50 Kilomètres</span>
             <div class="big-price" style="color: var(--sand);">100 €</div>
@@ -430,7 +531,7 @@
       <h2 class="title">Contactez Nathan &amp; Clément</h2>
       <p>Une question sur notre projet, envie de devenir partenaire, de nous proposer une 4L ou simplement de nous donner un coup de pouce ? Écrivez-nous directement !</p>
       
-      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 32px; margin-top: 30px;">
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(min(310px, 100%), 1fr)); gap: 32px; margin-top: 30px;">
         
         <!-- Coordonnées directes -->
         <div class="info-card spotlight-card" style="padding: 32px;">
@@ -450,7 +551,7 @@
 
           <h4 style="font-size: 18px; margin-bottom: 10px;">Dossier de partenariat :</h4>
           <p style="color: var(--muted); font-size: 14px; margin-bottom: 16px;">Retrouvez notre présentation complète, notre budget et le plan de marquage en version PDF imprimable :</p>
-          <a href="dossier_sponsoring.pdf" target="_blank" class="btn gold" style="width: 100%; font-size: 14px;">📄 Ouvrir le Dossier Sponsoring (PDF)</a>
+          <a href="dossier_sponsoring.pdf" target="_blank" rel="noopener" class="btn gold" style="width: 100%; font-size: 14px;">📄 Ouvrir le Dossier Sponsoring (PDF)</a>
         </div>
 
         <!-- Formulaire de contact direct -->
@@ -526,7 +627,7 @@
         <li><a href="projet.html">Le Projet &amp; La 4L</a></li>
         <li><a href="sponsors.html">Simulateur 3D &amp; Tarifs</a></li>
         <li><a href="contact.html">Budget &amp; Contact</a></li>
-        <li><a href="dossier_sponsoring.pdf" target="_blank">Dossier Sponsoring (PDF)</a></li>
+        <li><a href="dossier_sponsoring.pdf" target="_blank" rel="noopener">Dossier Sponsoring (PDF)</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -543,185 +644,145 @@
   </div>
 </footer>
 
-<!-- SCRIPTS INTERACTIFS -->
+<!-- MOTEUR COMMUN (menu, animations, route, particules...) -->
+<script src="main.js"></script>
+
+<!-- SCRIPT PROPRE À CETTE PAGE -->
 <script>
   // =========================================================================
-  // 1. CONFIGURATION DE LA CAGNOTTE (Modifie simplement MONTANT_ACTUEL ici !)
+  // 1. CONFIGURATION DE LA CAGNOTTE (modifie simplement MONTANT_ACTUEL ici !)
   // =========================================================================
   const MONTANT_ACTUEL = 500;     // <-- Change ce nombre en euros au fil de vos sponsors !
   const MONTANT_OBJECTIF = 10000;
+  const PALIERS = [3000, 6500, 10000]; // les 3 paliers affichés sous la jauge
 
-  let cagnotteAnimated = false;
-  function animateCagnotte() {
-    if (cagnotteAnimated) return;
-    cagnotteAnimated = true;
-
-    const pct = Math.min(100, Math.round((MONTANT_ACTUEL / MONTANT_OBJECTIF) * 100));
+  // =========================================================================
+  // 2. JAUGE DE LA CAGNOTTE : la 4L roule jusqu'au montant récolté
+  // =========================================================================
+  (function () {
+    const card = document.getElementById('cagnotte-trigger');
+    if (!card) return;
+    const road = card.querySelector('.track-road');
+    const fill = document.getElementById('progress-fill');
+    const car = document.getElementById('progress-car');
+    const amountEl = document.getElementById('montant-actuel');
+    const pctEl = document.getElementById('pourcentage-affiche');
+    const steps = card.querySelectorAll('.milestone-step');
     document.getElementById('montant-objectif').textContent = MONTANT_OBJECTIF.toLocaleString('fr-FR');
-    
-    // Animation de la barre et de la 4L
-    document.getElementById('progress-fill').style.width = pct + '%';
-    document.getElementById('progress-car').style.left = pct + '%';
 
-    // Animation du compteur en euros et du pourcentage
-    const duration = 1600;
-    const startTime = performance.now();
-    const step = (now) => {
-      const progress = Math.min((now - startTime) / duration, 1);
-      const ease = 1 - Math.pow(1 - progress, 4);
-      document.getElementById('montant-actuel').textContent = Math.floor(ease * MONTANT_ACTUEL).toLocaleString('fr-FR');
-      document.getElementById('pourcentage-affiche').textContent = Math.floor(ease * pct);
-      if (progress < 1) requestAnimationFrame(step);
-    };
-    requestAnimationFrame(step);
+    const ratio = Math.max(0, Math.min(1, MONTANT_ACTUEL / MONTANT_OBJECTIF));
+    const finalPct = Math.round(ratio * 100);
+
+    // bornes des paliers intermédiaires posées sur la route
+    const marks = PALIERS.map((value, i) => {
+      if (i === PALIERS.length - 1) return null; // le dernier = drapeau d'arrivée
+      const m = document.createElement('span');
+      m.className = 'track-mark';
+      m.style.left = (value / MONTANT_OBJECTIF) * 100 + '%';
+      m.title = 'Palier ' + (i + 1) + ' : ' + value.toLocaleString('fr-FR') + ' €';
+      road.appendChild(m);
+      return m;
+    });
+
+    let started = false;
+    function run() {
+      if (started) return;
+      started = true;
+      fill.style.width = ratio * 100 + '%';
+      car.style.left = ratio * 100 + '%';
+      car.classList.add('driving');
+      setTimeout(() => car.classList.remove('driving'), 1900);
+
+      CB2R.animateNumber(amountEl, 0, MONTANT_ACTUEL, 1800, undefined, (value, progress) => {
+        pctEl.textContent = progress >= 1 ? finalPct : Math.min(100, Math.floor((value / MONTANT_OBJECTIF) * 100));
+        PALIERS.forEach((p, i) => {
+          if (value >= p) {
+            if (steps[i]) steps[i].classList.add('hit');
+            if (marks[i]) marks[i].classList.add('hit');
+          }
+        });
+      });
+    }
+
+    if ('IntersectionObserver' in window) {
+      const obs = new IntersectionObserver((entries) => {
+        if (entries[0].isIntersecting) { run(); obs.disconnect(); }
+      }, { threshold: 0.35 });
+      obs.observe(card);
+    } else {
+      run();
+    }
+  })();
+
+  // =========================================================================
+  // 3. BARRE DE RÉPARTITION DU BUDGET : se remplit à l'apparition
+  // =========================================================================
+  (function () {
+    const wrap = document.querySelector('.budget-split-wrap');
+    if (!wrap || CB2R.reduceMotion || !('IntersectionObserver' in window)) return;
+    const segs = Array.from(wrap.querySelectorAll('.split-seg'));
+    const widths = segs.map((s) => s.style.width);
+    segs.forEach((s) => { s.style.width = '0%'; });
+    const obs = new IntersectionObserver((entries) => {
+      if (!entries[0].isIntersecting) return;
+      segs.forEach((s, i) => setTimeout(() => { s.style.width = widths[i]; }, 150 + i * 200));
+      obs.disconnect();
+    }, { threshold: 0.5 });
+    obs.observe(wrap);
+  })();
+
+  // =========================================================================
+  // 4. SÉLECTION D'UN PALIER DE KILOMÈTRES (PARTICULIERS)
+  // =========================================================================
+  function selectKmSupport(card, tierText) {
+    document.querySelectorAll('.km-tier-card').forEach((c) => c.classList.toggle('selected', c === card));
+    document.getElementById('contact-topic').value = 'Parrainage de kilomètres (Particulier)';
+    document.getElementById('contact-message').value =
+      'Bonjour Nathan et Clément,\n\nJe souhaite vous soutenir en choisissant le palier : ' + tierText +
+      ".\nPouvez-vous m'indiquer comment effectuer ma participation (RIB / HelloAsso / Chèque) pour inscrire mon prénom sur la 4L ?\n\nBravo pour votre projet !";
+    const box = document.getElementById('contact-form-box');
+    box.scrollIntoView({ behavior: CB2R.reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    // le focus attend la fin du défilement (sinon il "casse" le scroll fluide)
+    setTimeout(() => {
+      document.getElementById('contact-name').focus({ preventScroll: true });
+      CB2R.pulse(box);
+    }, 550);
   }
 
-  // Déclenche l'animation de la cagnotte quand elle apparaît à l'écran
-  const cagnotteTrigger = document.getElementById('cagnotte-trigger');
-  if (cagnotteTrigger) {
-    const cagnotteObs = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) animateCagnotte();
-    }, { threshold: 0.25 });
-    cagnotteObs.observe(cagnotteTrigger);
-  }
-
   // =========================================================================
-  // 2. SÉLECTION D'UN PALIER DE KILOMÈTRES (PARTICULIERS)
+  // 5. ENVOI DU FORMULAIRE DE CONTACT & COPIE PRESSE-PAPIER
   // =========================================================================
-  function selectKmSupport(tierText) {
-    const topicSelect = document.getElementById('contact-topic');
-    topicSelect.value = "Parrainage de kilomètres (Particulier)";
-    const msgBox = document.getElementById('contact-message');
-    msgBox.value = "Bonjour Nathan et Clément,\n\nJe souhaite vous soutenir en choisissant le palier : " + tierText + ".\nPouvez-vous m'indiquer comment effectuer ma participation (RIB / HelloAsso / Chèque) pour inscrire mon prénom sur la 4L ?\n\nBravo pour votre projet !";
-    document.getElementById('contact-form-box').scrollIntoView({ behavior: 'smooth', block: 'center' });
-    document.getElementById('contact-name').focus();
-  }
-
-  // =========================================================================
-  // 3. ENVOI DU FORMULAIRE DE CONTACT & COPIE PRESSE-PAPIER
-  // =========================================================================
-  let lastContactClipboard = "";
+  const EMAIL_ASSO = 'cestbeau2rever@gmail.com';
+  let lastContactClipboard = '';
 
   function sendContactEmail(event) {
     event.preventDefault();
-    
     const topic = document.getElementById('contact-topic').value;
     const name = document.getElementById('contact-name').value.trim();
-    const email = document.getElementById('contact-email').value.trim();
+    const contact = document.getElementById('contact-email').value.trim();
     const message = document.getElementById('contact-message').value.trim();
-    
-    const emailTo = "cestbeau2rever@gmail.com";
-    const subjectText = "[" + topic + "] - " + name;
-    const bodyText =
-      "Bonjour Nathan et Clément,\n\n" +
-      "Objet : " + topic + "\n" +
-      "Nom / Entreprise : " + name + "\n" +
-      "Contact : " + email + "\n\n" +
-      "Message :\n" + message + "\n\n" +
-      "Cordialement,\n" + name;
-    
-    lastContactClipboard = "Destinataire : " + emailTo + "\nObjet : " + subjectText + "\n\n" + bodyText;
-    document.getElementById('contact-fallback').style.display = 'block';
 
-    window.location.href = "mailto:" + emailTo + "?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
+    const subjectText = '[' + topic + '] - ' + name;
+    const bodyText =
+      'Bonjour Nathan et Clément,\n\n' +
+      'Objet : ' + topic + '\n' +
+      'Nom / Entreprise : ' + name + '\n' +
+      'Contact : ' + contact + '\n\n' +
+      'Message :\n' + message + '\n\n' +
+      'Cordialement,\n' + name;
+
+    lastContactClipboard = 'Destinataire : ' + EMAIL_ASSO + '\nObjet : ' + subjectText + '\n\n' + bodyText;
+    document.getElementById('contact-fallback').classList.add('show');
+    CB2R.toast('Ouverture de votre messagerie… ✉️');
+    window.location.href = 'mailto:' + EMAIL_ASSO + '?subject=' + encodeURIComponent(subjectText) + '&body=' + encodeURIComponent(bodyText);
   }
 
   function copyPreparedContact() {
-    navigator.clipboard.writeText(lastContactClipboard).then(() => {
-      alert("Votre message et l'adresse cestbeau2rever@gmail.com ont été copiés dans le presse-papier !");
-    });
+    CB2R.copyText(lastContactClipboard, 'Message et adresse e-mail copiés ✓');
   }
 
   function copyDirectEmail() {
-    navigator.clipboard.writeText("cestbeau2rever@gmail.com").then(() => {
-      alert("Adresse cestbeau2rever@gmail.com copiée dans le presse-papier !");
-    });
-  }
-
-  // =========================================================================
-  // 4. MENU MOBILE, SCROLL SPINE & PARTICULES DE SABLE
-  // =========================================================================
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
-    });
-  }
-
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        const km = entry.target.querySelector('.km');
-        if (km) km.classList.add('reached');
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  const scrollBar = document.getElementById('scroll-progress-bar');
-  const spineFill = document.getElementById('route-spine-fill');
-  const routeContainer = document.getElementById('route-container');
-  const mainNav = document.getElementById('main-nav');
-
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollBar) scrollBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
-    mainNav.classList.toggle('scrolled', scrollTop > 40);
-
-    if (routeContainer && spineFill) {
-      const rect = routeContainer.getBoundingClientRect();
-      const scrolledInRoute = (window.innerHeight * 0.6) - rect.top;
-      const routePct = Math.max(0, Math.min(100, (scrolledInRoute / rect.height) * 100));
-      spineFill.style.setProperty('--spine-height', routePct + '%');
-    }
-  }, { passive: true });
-
-  document.querySelectorAll('.spotlight-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    });
-  });
-
-  const canvas = document.getElementById('sand-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height, particles;
-    function initParticles() {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-      particles = Array.from({ length: 30 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 2 + 0.6,
-        vx: Math.random() * 0.6 + 0.15,
-        vy: -Math.random() * 0.35 - 0.05,
-        alpha: Math.random() * 0.45 + 0.1
-      }));
-    }
-    function drawParticles() {
-      ctx.clearRect(0, 0, width, height);
-      for (const p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(201, 160, 99, ${p.alpha})`;
-        ctx.fill();
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-      }
-      requestAnimationFrame(drawParticles);
-    }
-    initParticles();
-    drawParticles();
-    window.addEventListener('resize', initParticles);
+    CB2R.copyText(EMAIL_ASSO, 'Adresse ' + EMAIL_ASSO + ' copiée ✓');
   }
 </script>
 </body>
