@@ -3,9 +3,16 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#12151b">
+  <script>document.documentElement.classList.add('js');</script>
   <title>Sponsors & Configurateur 3D — N&C 4L Trophy 2028 | C'est Beau 2 Rêver</title>
   <meta name="description" content="Devenez partenaire de l'équipage malouin Nathan et Clément pour le 4L Trophy 2028. Testez votre logo en 3D sur notre 4L et découvrez nos encarts 100 % déductibles.">
   
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Sponsors & Configurateur 3D — N&C 4L Trophy 2028 | C'est Beau 2 Rêver">
+  <meta property="og:description" content="Devenez partenaire de l'équipage malouin Nathan et Clément pour le 4L Trophy 2028. Testez votre logo en 3D sur notre 4L et découvrez nos encarts 100 % déductibles.">
+  <meta property="og:image" content="https://natbat7.github.io/nc-4ltrophy-2028/logo_cb2r.png">
+
   <link rel="icon" type="image/png" href="logo_cb2r.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -100,13 +107,57 @@
       font-weight: 600;
     }
 
+    /* Chargement du configurateur 3D */
+    .viewer-loader {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      background: var(--ink-2);
+      color: var(--sand);
+      font-family: 'IBM Plex Mono', monospace;
+      font-size: 12px;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: opacity 0.6s ease, visibility 0.6s ease;
+    }
+    .viewer-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: 3px solid var(--border-dark);
+      border-top-color: var(--rally-red);
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+    #configurateur-container:fullscreen {
+      height: 100vh;
+    }
+    .viewer-status .dot {
+      animation: livePulse 1.8s ease-in-out infinite;
+    }
+    @keyframes livePulse {
+      50% { box-shadow: 0 0 2px #38c172; opacity: 0.6; }
+    }
+
     .range-slider {
       -webkit-appearance: none;
       appearance: none;
       width: 100%;
       height: 8px;
       border-radius: 4px;
-      background: var(--ink);
+      /* la partie gauche du curseur se colore selon le montant */
+      background: linear-gradient(90deg, var(--sand) 0%, var(--rally-red) var(--fill, 38%), var(--ink) var(--fill, 38%));
       border: 1px solid var(--border-dark);
       outline: none;
       margin: 18px 0 24px;
@@ -127,10 +178,55 @@
     .range-slider::-webkit-slider-thumb:hover {
       transform: scale(1.15);
     }
+    /* Firefox : le curseur n'était pas stylé */
+    .range-slider::-moz-range-thumb {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: var(--rally-red);
+      border: 2px solid var(--paper);
+      box-shadow: 0 0 12px var(--rally-red);
+      cursor: pointer;
+    }
+    .range-slider::-moz-range-track {
+      background: transparent;
+    }
+    .rate-btn:hover:not(.active) {
+      color: var(--paper);
+    }
+    .tax-box {
+      transition: transform 0.3s var(--ease-out), border-color 0.3s ease;
+    }
+    .tax-box:hover {
+      transform: translateY(-3px);
+    }
+    .tax-box .t-val {
+      font-variant-numeric: tabular-nums;
+    }
+    .zone-card.selected {
+      animation: zonePick 0.6s var(--ease-out);
+    }
+    @keyframes zonePick {
+      0% { box-shadow: 0 0 0 0 rgba(200, 64, 46, 0.6); }
+      100% { box-shadow: 0 0 0 16px rgba(200, 64, 46, 0), 0 12px 28px rgba(0, 0, 0, 0.45); }
+    }
+    .zone-action {
+      transition: transform 0.3s var(--ease-out), color 0.25s ease;
+    }
+    .zone-card:hover .zone-action {
+      transform: translateX(4px);
+      color: var(--paper);
+    }
+    .schema-box img {
+      transition: transform 0.6s var(--ease-out);
+    }
+    .schema-box:hover img {
+      transform: scale(1.02);
+    }
 
     .tax-results {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
       gap: 16px;
     }
     .tax-box {
@@ -162,7 +258,7 @@
     /* Grille des cartes du Plan de Marquage */
     .zones-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(235px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(min(235px, 100%), 1fr));
       gap: 18px;
       margin-top: 16px;
     }
@@ -272,7 +368,7 @@
       <span class="nav-brand-sub">C'est Beau 2 Rêver</span>
     </div>
   </a>
-  <button class="nav-toggle" id="nav-toggle" aria-label="Ouvrir le menu">☰</button>
+  <button class="nav-toggle" id="nav-toggle" type="button" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="nav-links"><span></span><span></span><span></span></button>
   <div class="nav-links" id="nav-links">
     <a href="index.html">Accueil</a>
     <a href="projet.html">Le Projet</a>
@@ -304,7 +400,7 @@
     <h1>Espaces <span class="accent">Sponsors</span></h1>
     <p class="hero-sub">Faites voyager votre entreprise de la Côte d'Émeraude jusqu'au Sahara sur un support publicitaire solidaire et 100 % déductible.</p>
     <div class="cta-row">
-      <a href="dossier_sponsoring.pdf" target="_blank" class="btn gold">📄 Télécharger notre dossier de partenariat (PDF)</a>
+      <a href="dossier_sponsoring.pdf" target="_blank" rel="noopener" class="btn gold">📄 Télécharger notre dossier de partenariat (PDF)</a>
       <a href="#tarifs-sponsors" class="btn ghost">Consulter le plan de marquage</a>
     </div>
   </div>
@@ -328,15 +424,20 @@
             <span class="dot"></span>
             <span>Studio 3D Renault 4L — Rotation, Zoom &amp; Import de logo actifs</span>
           </div>
-          <button type="button" class="btn ghost" style="padding: 6px 14px; font-size: 12px;" onclick="toggleFullscreen3D()">⛶ Plein Écran</button>
+          <button type="button" id="fs-btn" class="btn ghost" style="padding: 6px 14px; font-size: 12px;" onclick="toggleFullscreen3D()">⛶ Plein Écran</button>
         </div>
         <div id="configurateur-container">
-          <iframe 
+          <div class="viewer-loader" id="viewer-loader" aria-hidden="true">
+            <span class="spinner"></span>
+            <span>Chargement du studio 3D…</span>
+          </div>
+          <iframe
             id="iframe-3d"
             src="https://natbat7.github.io/modele4L/" 
             width="100%" 
             height="100%" 
             style="border: none;"
+            allow="fullscreen"
             allowfullscreen
             title="Configurateur 3D 4L Trophy">
           </iframe>
@@ -364,12 +465,12 @@
             <p style="font-size: 14px; color: var(--muted); margin-top: 2px;">Ajustez le curseur ou cliquez sur un emplacement plus bas pour calculer le coût net pour votre trésorerie :</p>
           </div>
           <div class="rate-toggle" role="group" aria-label="Taux d'imposition">
-            <button type="button" class="rate-btn active" id="btn-rate-25" onclick="setTaxRate(0.25)">IS Taux Normal (25%)</button>
-            <button type="button" class="rate-btn" id="btn-rate-15" onclick="setTaxRate(0.15)">IS Taux PME (15%)</button>
+            <button type="button" class="rate-btn active" id="btn-rate-25" aria-pressed="true" onclick="setTaxRate(0.25)">IS Taux Normal (25%)</button>
+            <button type="button" class="rate-btn" id="btn-rate-15" aria-pressed="false" onclick="setTaxRate(0.15)">IS Taux PME (15%)</button>
           </div>
         </div>
 
-        <input type="range" id="tax-slider" class="range-slider" min="200" max="1500" step="50" value="700" oninput="updateTaxSimulator(this.value)">
+        <input type="range" id="tax-slider" class="range-slider" min="200" max="1500" step="50" value="700" aria-label="Montant du parrainage en euros" oninput="updateTaxSimulator(this.value)">
 
         <div class="tax-results">
           <div class="tax-box">
@@ -401,7 +502,7 @@
 
       <!-- Schéma de la voiture -->
       <div class="schema-box">
-        <img src="schema-voiture.jpg" alt="Schéma technique 4L Trophy Zones 1 à 29">
+        <img src="schema-voiture.jpg" loading="lazy" decoding="async" alt="Schéma technique 4L Trophy Zones 1 à 29">
         <p class="mono" style="font-size: 12px; color: var(--muted); margin-top: 12px;">Plan de marquage officiel — Zones 1 à 29 personnalisables aux couleurs de votre entreprise</p>
       </div>
 
@@ -411,7 +512,7 @@
 
       <div class="zones-grid">
         <!-- Zone 29 -->
-        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 29 - Toit (1300€)', 1300)">
+        <div class="zone-card premium spotlight-card" data-zone="Zone 29 - Toit (1300€)" data-price="1300">
           <div>
             <span class="zone-num">Zone 29 · Vue Panoramique</span>
             <h4>Toit Complet</h4>
@@ -424,7 +525,7 @@
         </div>
 
         <!-- Zone 1 -->
-        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 1 - Capot Centre (1100€)', 1100)">
+        <div class="zone-card premium spotlight-card" data-zone="Zone 1 - Capot Centre (1100€)" data-price="1100">
           <div>
             <span class="zone-num">Zone 1 · Face Avant</span>
             <h4>Capot Central</h4>
@@ -437,7 +538,7 @@
         </div>
 
         <!-- Zones 2 & 3 -->
-        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 2 & 3 - Capot Latéral (700€)', 700)">
+        <div class="zone-card premium spotlight-card" data-zone="Zone 2 &amp; 3 - Capot Latéral (700€)" data-price="700">
           <div>
             <span class="zone-num">Zones 2 &amp; 3 · Avant</span>
             <h4>Capot Latéral</h4>
@@ -450,7 +551,7 @@
         </div>
 
         <!-- Zone 26 -->
-        <div class="zone-card premium spotlight-card" onclick="chooseZoneCard(this, 'Zone 26 - Hayon Central (700€)', 700)">
+        <div class="zone-card premium spotlight-card" data-zone="Zone 26 - Hayon Central (700€)" data-price="700">
           <div>
             <span class="zone-num">Zone 26 · Face Arrière</span>
             <h4>Hayon Central</h4>
@@ -469,7 +570,7 @@
 
       <div class="zones-grid">
         <!-- Flanc Droit -->
-        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zones 5 à 14 - Flanc Droit', 500)">
+        <div class="zone-card strategic spotlight-card" data-zone="Zones 5 à 14 - Flanc Droit" data-price="500">
           <div>
             <span class="zone-num">Zones 5 à 14 · Profil Droit</span>
             <h4>Portières &amp; Ailes (Droit)</h4>
@@ -482,7 +583,7 @@
         </div>
 
         <!-- Flanc Gauche -->
-        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zones 15 à 24 - Flanc Gauche', 500)">
+        <div class="zone-card strategic spotlight-card" data-zone="Zones 15 à 24 - Flanc Gauche" data-price="500">
           <div>
             <span class="zone-num">Zones 15 à 24 · Profil Gauche</span>
             <h4>Portières &amp; Ailes (Gauche)</h4>
@@ -495,7 +596,7 @@
         </div>
 
         <!-- Zone 27 -->
-        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zone 27 - Coffre Bas (500€)', 500)">
+        <div class="zone-card strategic spotlight-card" data-zone="Zone 27 - Coffre Bas (500€)" data-price="500">
           <div>
             <span class="zone-num">Zone 27 · Arrière</span>
             <h4>Coffre Bas</h4>
@@ -508,7 +609,7 @@
         </div>
 
         <!-- Zones 4 & 25 -->
-        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zone 4 - Haut de pare-brise (400€)', 400)">
+        <div class="zone-card strategic spotlight-card" data-zone="Zone 4 - Haut de pare-brise (400€)" data-alt="Zone 25 - Lunette Arrière (400€)" data-price="400">
           <div>
             <span class="zone-num">Zones 4 ou 25 · Vitrage</span>
             <h4>Pare-brise / Lunette</h4>
@@ -521,7 +622,7 @@
         </div>
 
         <!-- Zone 28 -->
-        <div class="zone-card strategic spotlight-card" onclick="chooseZoneCard(this, 'Zone 28 - Pare-chocs Arrière (300€)', 300)">
+        <div class="zone-card strategic spotlight-card" data-zone="Zone 28 - Pare-chocs Arrière (300€)" data-price="300">
           <div>
             <span class="zone-num">Zone 28 · Ticket d'entrée Pro</span>
             <h4>Pare-chocs Arrière</h4>
@@ -629,7 +730,7 @@
         <li><a href="projet.html">Le Projet &amp; La 4L</a></li>
         <li><a href="sponsors.html">Simulateur 3D &amp; Tarifs</a></li>
         <li><a href="contact.html">Budget &amp; Contact</a></li>
-        <li><a href="dossier_sponsoring.pdf" target="_blank">Dossier Sponsoring (PDF)</a></li>
+        <li><a href="dossier_sponsoring.pdf" target="_blank" rel="noopener">Dossier Sponsoring (PDF)</a></li>
       </ul>
     </div>
     <div class="footer-col">
@@ -646,190 +747,167 @@
   </div>
 </footer>
 
-<!-- SCRIPTS INTERACTIFS -->
+<!-- MOTEUR COMMUN (menu, animations, route, particules...) -->
+<script src="main.js"></script>
+
+<!-- SCRIPT PROPRE À CETTE PAGE -->
 <script>
-  // 1. Menu Mobile
-  const navToggle = document.getElementById('nav-toggle');
-  const navLinks = document.getElementById('nav-links');
-  if (navToggle) {
-    navToggle.addEventListener('click', () => {
-      navLinks.classList.toggle('open');
-      navToggle.textContent = navLinks.classList.contains('open') ? '✕' : '☰';
-    });
+  // =========================================================================
+  // 1. CONFIGURATEUR 3D : écran de chargement + plein écran
+  //    (sur iPhone, où le plein écran n'existe pas, le studio s'ouvre dans un onglet)
+  // =========================================================================
+  const viewer3d = document.getElementById('configurateur-container');
+  const iframe3d = document.getElementById('iframe-3d');
+  const loader3d = document.getElementById('viewer-loader');
+  const fsBtn = document.getElementById('fs-btn');
+
+  if (iframe3d && loader3d) {
+    const hideLoader = () => loader3d.classList.add('hidden');
+    iframe3d.addEventListener('load', hideLoader);
+    setTimeout(hideLoader, 12000);
   }
 
-  // 2. Mode Plein Écran pour le Configurateur 3D
+  const isFullscreen = () => document.fullscreenElement || document.webkitFullscreenElement;
+
   function toggleFullscreen3D() {
-    const container = document.getElementById('configurateur-container');
-    if (!document.fullscreenElement) {
-      if (container.requestFullscreen) container.requestFullscreen();
-    } else {
-      if (document.exitFullscreen) document.exitFullscreen();
+    if (isFullscreen()) {
+      (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+      return;
     }
+    const request = viewer3d.requestFullscreen || viewer3d.webkitRequestFullscreen;
+    const openTab = () => window.open(iframe3d.src, '_blank', 'noopener');
+    if (!request) { openTab(); return; }
+    const result = request.call(viewer3d);
+    if (result && result.catch) result.catch(openTab);
   }
 
-  // 3. Simulateur Fiscal (IS 25% vs PME 15%)
+  ['fullscreenchange', 'webkitfullscreenchange'].forEach((ev) =>
+    document.addEventListener(ev, () => {
+      if (fsBtn) fsBtn.textContent = isFullscreen() ? '✕ Quitter le plein écran' : '⛶ Plein Écran';
+    })
+  );
+
+  // =========================================================================
+  // 2. SIMULATEUR FISCAL (IS 25 % vs PME 15 %) avec chiffres animés
+  // =========================================================================
   let currentTaxRate = 0.25;
+  const taxSlider = document.getElementById('tax-slider');
+  const taxOut = {
+    brut: document.getElementById('sim-brut'),
+    eco: document.getElementById('sim-eco'),
+    net: document.getElementById('sim-net')
+  };
+  const shown = { brut: 700, eco: 175, net: 525 };
+  const euros = (prefix) => (v) => prefix + Math.round(v).toLocaleString('fr-FR') + ' €';
 
   function setTaxRate(rate) {
     currentTaxRate = rate;
     document.getElementById('btn-rate-25').classList.toggle('active', rate === 0.25);
     document.getElementById('btn-rate-15').classList.toggle('active', rate === 0.15);
+    document.getElementById('btn-rate-25').setAttribute('aria-pressed', String(rate === 0.25));
+    document.getElementById('btn-rate-15').setAttribute('aria-pressed', String(rate === 0.15));
     document.getElementById('sim-rate-label').textContent = Math.round(rate * 100) + '%';
-    updateTaxSimulator(document.getElementById('tax-slider').value);
+    updateTaxSimulator(taxSlider.value, 500);
   }
 
-  function updateTaxSimulator(val) {
+  function updateTaxSimulator(val, duration) {
     const brut = parseInt(val, 10);
     const eco = Math.round(brut * currentTaxRate);
     const net = brut - eco;
-    document.getElementById('sim-brut').textContent = brut.toLocaleString('fr-FR') + ' €';
-    document.getElementById('sim-eco').textContent = '- ' + eco.toLocaleString('fr-FR') + ' €';
-    document.getElementById('sim-net').textContent = net.toLocaleString('fr-FR') + ' €';
+    const d = duration === undefined ? 260 : duration;
+    CB2R.animateNumber(taxOut.brut, shown.brut, brut, d, euros(''));
+    CB2R.animateNumber(taxOut.eco, shown.eco, eco, d, euros('- '));
+    CB2R.animateNumber(taxOut.net, shown.net, net, d, euros(''));
+    shown.brut = brut; shown.eco = eco; shown.net = net;
+
+    const min = +taxSlider.min, max = +taxSlider.max;
+    taxSlider.style.setProperty('--fill', ((brut - min) / (max - min)) * 100 + '%');
+    taxSlider.setAttribute('aria-valuetext', brut + ' euros');
+  }
+  updateTaxSimulator(taxSlider.value, 0);
+
+  // =========================================================================
+  // 3. PLAN DE MARQUAGE : carte <-> liste déroulante <-> simulateur synchronisés
+  // =========================================================================
+  const zoneCards = Array.from(document.querySelectorAll('.zone-card[data-zone]'));
+  const zoneSelect = document.getElementById('zone-select');
+
+  function highlightZone(card) {
+    zoneCards.forEach((c) => c.classList.toggle('selected', c === card));
   }
 
-  // 4. Sélection interactive d'une carte du Plan de Marquage
-  function chooseZoneCard(cardEl, optionValue, priceVal) {
-    document.querySelectorAll('.zone-card').forEach(c => c.classList.remove('selected'));
-    cardEl.classList.add('selected');
-
-    // Synchronise le simulateur fiscal avec le prix de la zone choisie
-    const slider = document.getElementById('tax-slider');
-    if (slider && priceVal) {
-      slider.value = priceVal;
-      updateTaxSimulator(priceVal);
+  function chooseZoneCard(card) {
+    highlightZone(card);
+    if (card.dataset.price) {
+      taxSlider.value = card.dataset.price;
+      updateTaxSimulator(card.dataset.price, 700);
     }
-
-    // Sélectionne l'option dans le menu déroulant
-    const select = document.getElementById('zone-select');
-    for (let i = 0; i < select.options.length; i++) {
-      if (select.options[i].value === optionValue) {
-        select.selectedIndex = i;
-        break;
-      }
-    }
-
-    // Scroll fluide jusqu'au formulaire
-    document.getElementById('sponsor-form-area').scrollIntoView({ behavior: 'smooth', block: 'center' });
+    zoneSelect.value = card.dataset.zone;
+    const form = document.getElementById('sponsor-form-area');
+    form.scrollIntoView({ behavior: CB2R.reduceMotion ? 'auto' : 'smooth', block: 'center' });
+    setTimeout(() => {
+      CB2R.pulse(form);
+      document.getElementById('sponsor-company').focus({ preventScroll: true });
+    }, 550);
   }
 
-  // 5. Génération de l'e-mail de demande de partenariat + Secours Presse-Papier
-  let lastSponsorClipboard = "";
+  zoneCards.forEach((card) => card.addEventListener('click', () => chooseZoneCard(card)));
+
+  // Si l'utilisateur choisit directement dans la liste, la carte et le simulateur suivent
+  zoneSelect.addEventListener('change', () => {
+    const value = zoneSelect.value;
+    const card = zoneCards.find((c) => c.dataset.zone === value || c.dataset.alt === value) || null;
+    highlightZone(card);
+    const match = value.match(/\((\d+)\s*€\)/);
+    const price = match ? match[1] : (card && card.dataset.price);
+    if (price) {
+      taxSlider.value = price;
+      updateTaxSimulator(price, 500);
+    }
+  });
+
+  // =========================================================================
+  // 4. GÉNÉRATION DE L'E-MAIL DE DEMANDE DE PARTENARIAT + COPIE
+  // =========================================================================
+  const EMAIL_ASSO = 'cestbeau2rever@gmail.com';
+  let lastSponsorClipboard = '';
 
   function generateDossier(event) {
     if (event) event.preventDefault();
-    
-    const select = document.getElementById('zone-select');
-    const chosenZone = select.value;
+    const chosenZone = zoneSelect.value;
     const company = document.getElementById('sponsor-company').value.trim();
     const contact = document.getElementById('sponsor-contact').value.trim();
     const notes = document.getElementById('sponsor-notes').value.trim();
-    
+
     if (!chosenZone) {
-      alert("Veuillez sélectionner un emplacement dans la liste déroulante.");
+      CB2R.toast('Veuillez choisir un emplacement dans la liste.', 'error');
+      zoneSelect.classList.remove('shake');
+      void zoneSelect.offsetWidth;
+      zoneSelect.classList.add('shake');
+      zoneSelect.focus();
       return;
     }
-    
-    const emailTo = "cestbeau2rever@gmail.com";
-    const subjectText = "Demande de Sponsoring 4L Trophy - " + company + " (" + chosenZone + ")";
+
+    const subjectText = 'Demande de Sponsoring 4L Trophy - ' + company + ' (' + chosenZone + ')';
     const bodyText =
-      "Bonjour Nathan et Clément,\n\n" +
+      'Bonjour Nathan et Clément,\n\n' +
       "Je souhaite réserver l'emplacement suivant sur votre 4L pour notre entreprise :\n" +
-      "📌 Emplacement : " + chosenZone + "\n" +
-      "🏢 Entreprise & Contact : " + company + "\n" +
-      "📞 Coordonnées : " + contact + "\n" +
-      (notes ? "💬 Précisions : " + notes + "\n" : "") + "\n" +
+      '📌 Emplacement : ' + chosenZone + '\n' +
+      '🏢 Entreprise & Contact : ' + company + '\n' +
+      '📞 Coordonnées : ' + contact + '\n' +
+      (notes ? '💬 Précisions : ' + notes + '\n' : '') + '\n' +
       "⚠️ [Rappel : N'oubliez pas d'attacher votre logo en pièce jointe de cet e-mail]\n\n" +
-      "Pouvez-vous nous recontacter pour nous transmettre la convention de partenariat et la facture ?\n\n" +
-      "Cordialement,\n" + company;
+      'Pouvez-vous nous recontacter pour nous transmettre la convention de partenariat et la facture ?\n\n' +
+      'Cordialement,\n' + company;
 
-    lastSponsorClipboard = "Destinataire : " + emailTo + "\nObjet : " + subjectText + "\n\n" + bodyText;
-    document.getElementById('sponsor-fallback').style.display = 'block';
-
-    window.location.href = "mailto:" + emailTo + "?subject=" + encodeURIComponent(subjectText) + "&body=" + encodeURIComponent(bodyText);
+    lastSponsorClipboard = 'Destinataire : ' + EMAIL_ASSO + '\nObjet : ' + subjectText + '\n\n' + bodyText;
+    document.getElementById('sponsor-fallback').classList.add('show');
+    CB2R.toast('Ouverture de votre messagerie… ✉️');
+    window.location.href = 'mailto:' + EMAIL_ASSO + '?subject=' + encodeURIComponent(subjectText) + '&body=' + encodeURIComponent(bodyText);
   }
 
   function copySponsorText() {
-    navigator.clipboard.writeText(lastSponsorClipboard).then(() => {
-      alert("Votre demande et l'adresse cestbeau2rever@gmail.com ont été copiées dans le presse-papier !");
-    });
-  }
-
-  // 6. Apparition au scroll & progression de la route
-  const revealObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-        const km = entry.target.querySelector('.km');
-        if (km) km.classList.add('reached');
-      }
-    });
-  }, { threshold: 0.12 });
-
-  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-  const scrollBar = document.getElementById('scroll-progress-bar');
-  const spineFill = document.getElementById('route-spine-fill');
-  const routeContainer = document.getElementById('route-container');
-  const mainNav = document.getElementById('main-nav');
-
-  window.addEventListener('scroll', () => {
-    const scrollTop = window.scrollY;
-    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
-    if (scrollBar) scrollBar.style.width = (docHeight > 0 ? (scrollTop / docHeight) * 100 : 0) + '%';
-    mainNav.classList.toggle('scrolled', scrollTop > 40);
-
-    if (routeContainer && spineFill) {
-      const rect = routeContainer.getBoundingClientRect();
-      const scrolledInRoute = (window.innerHeight * 0.6) - rect.top;
-      const routePct = Math.max(0, Math.min(100, (scrolledInRoute / rect.height) * 100));
-      spineFill.style.setProperty('--spine-height', routePct + '%');
-    }
-  }, { passive: true });
-
-  // 7. Effet Halo Spotlight sur les cartes
-  document.querySelectorAll('.spotlight-card').forEach(card => {
-    card.addEventListener('mousemove', e => {
-      const rect = card.getBoundingClientRect();
-      card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
-      card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
-    });
-  });
-
-  // 8. Particules de sable doré dans le Hero
-  const canvas = document.getElementById('sand-canvas');
-  if (canvas) {
-    const ctx = canvas.getContext('2d');
-    let width, height, particles;
-    function initParticles() {
-      width = canvas.width = canvas.offsetWidth;
-      height = canvas.height = canvas.offsetHeight;
-      particles = Array.from({ length: 30 }, () => ({
-        x: Math.random() * width,
-        y: Math.random() * height,
-        r: Math.random() * 2 + 0.6,
-        vx: Math.random() * 0.6 + 0.15,
-        vy: -Math.random() * 0.35 - 0.05,
-        alpha: Math.random() * 0.45 + 0.1
-      }));
-    }
-    function drawParticles() {
-      ctx.clearRect(0, 0, width, height);
-      for (const p of particles) {
-        ctx.beginPath();
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(201, 160, 99, ${p.alpha})`;
-        ctx.fill();
-        p.x += p.vx;
-        p.y += p.vy;
-        if (p.x > width) p.x = 0;
-        if (p.y < 0) p.y = height;
-      }
-      requestAnimationFrame(drawParticles);
-    }
-    initParticles();
-    drawParticles();
-    window.addEventListener('resize', initParticles);
+    CB2R.copyText(lastSponsorClipboard, 'Demande et adresse e-mail copiées ✓');
   }
 </script>
 </body>
